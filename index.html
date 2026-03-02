@@ -59,7 +59,6 @@
             font-weight: 600;
         }
 
-        /* Slide backgrounds */
         .slide-hero {
             background: 
                 radial-gradient(ellipse at 20% 80%, rgba(0, 196, 140, 0.25) 0%, transparent 50%),
@@ -80,7 +79,6 @@
             background: linear-gradient(135deg, rgba(0, 196, 140, 0.1), rgba(255, 184, 0, 0.05));
         }
 
-        /* Title slide */
         .title-slide {
             text-align: center;
             justify-content: center;
@@ -154,7 +152,6 @@
             transform: scale(1.05);
         }
 
-        /* Floating icons */
         .floating-icons {
             position: absolute;
             width: 100%;
@@ -179,13 +176,63 @@
         .floating-icon:nth-child(5) { top: 40%; left: 5%; animation-delay: -7s; }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
+            0% { transform: translate(0, 0) rotate(0deg); }
             25% { transform: translateY(-20px) rotate(5deg); }
             50% { transform: translateY(0) rotate(0deg); }
             75% { transform: translateY(20px) rotate(-5deg); }
         }
 
-        /* Content slides */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #00C48C;
+            border-radius: 50%;
+            animation: particleFloat 8s infinite ease-in-out;
+            opacity: 0.6;
+        }
+        
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 6s; }
+        .particle:nth-child(2) { left: 20%; top: 60%; animation-delay: 1s; animation-duration: 8s; background: #FFB800; }
+        .particle:nth-child(3) { left: 70%; top: 30%; animation-delay: 2s; animation-duration: 7s; }
+        .particle:nth-child(4) { left: 80%; top: 70%; animation-delay: 3s; animation-duration: 9s; background: #A855F7; }
+        .particle:nth-child(5) { left: 40%; top: 80%; animation-delay: 4s; animation-duration: 6s; }
+        .particle:nth-child(6) { left: 60%; top: 15%; animation-delay: 2.5s; animation-duration: 8s; background: #2DD4BF; }
+        
+        @keyframes particleFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            25% { transform: translate(20px, -30px) scale(1.2); opacity: 0.8; }
+            50% { transform: translate(-10px, -50px) scale(0.8); opacity: 0.4; }
+            75% { transform: translate(30px, -20px) scale(1.1); opacity: 0.7; }
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(0, 196, 140, 0.3);
+            border-radius: 50%;
+            animation: pulseRing 3s infinite;
+        }
+        
+        .pulse-ring:nth-child(1) { top: 20%; left: 15%; }
+        .pulse-ring:nth-child(2) { top: 60%; right: 20%; animation-delay: 1s; }
+        .pulse-ring:nth-child(3) { bottom: 30%; left: 30%; animation-delay: 2s; border-color: rgba(255, 184, 0, 0.3); }
+        
+        @keyframes pulseRing {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .glow-text {
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(0, 196, 140, 0.5)); }
+            50% { filter: drop-shadow(0 0 25px rgba(0, 196, 140, 0.8)); }
+        }
+
         .content-slide h2 {
             font-size: 3rem;
             margin-bottom: 15px;
@@ -202,47 +249,10 @@
             max-width: 800px;
         }
 
-        /* Grid layouts */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-        }
-
-        .role-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .role-card:hover {
-            transform: translateY(-10px) rotate(2deg);
-            border-color: var(--accent);
-            background: rgba(0, 196, 140, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 196, 140, 0.15);
-        }
-
-        .role-card:nth-child(odd):hover {
-            transform: translateY(-10px) rotate(-2deg);
-        }
-
-        /* Cards */
         .card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
@@ -266,10 +276,7 @@
             transition: transform 0.4s ease;
         }
 
-        .card:hover::before {
-            transform: scaleX(1);
-        }
-
+        .card:hover::before { transform: scaleX(1); }
         .card:hover {
             transform: translateY(-8px);
             border-color: var(--accent);
@@ -287,24 +294,10 @@
             justify-content: center;
             font-size: 32px;
             margin-bottom: 20px;
-            transition: all 0.4s ease;
-            cursor: pointer;
         }
 
-        .card-icon:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.3);
-        }
-
-        .card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.7);
-        }
+        .card h3 { font-size: 1.3rem; margin-bottom: 12px; }
+        .card p { font-size: 0.95rem; color: rgba(255,255,255,0.7); }
 
         .card ul {
             list-style: none;
@@ -326,14 +319,7 @@
             font-weight: bold;
         }
 
-        /* Tags */
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
+        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
         .tag {
             background: rgba(0, 196, 140, 0.15);
             color: var(--accent);
@@ -343,18 +329,8 @@
             font-weight: 500;
         }
 
-        /* Stats */
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin-top: 50px;
-        }
-
-        .stat-box {
-            text-align: center;
-        }
-
+        .stats-row { display: flex; justify-content: center; gap: 60px; margin-top: 50px; }
+        .stat-box { text-align: center; }
         .stat-number {
             font-size: 4rem;
             font-weight: 900;
@@ -365,156 +341,72 @@
             background-clip: text;
             line-height: 1;
         }
+        .stat-label { font-size: 1rem; color: var(--gray); margin-top: 10px; }
 
-        .stat-label {
+        .timer-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .timer-label {
             font-size: 1rem;
-            color: var(--gray);
-            margin-top: 10px;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            max-width: 900px;
-            margin: 40px auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient-1);
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            display: flex;
-            justify-content: flex-end;
-            padding-right: 55%;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 10px;
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 20px rgba(0, 196, 140, 0.5);
-        }
-
-        .timeline-item:nth-child(even) {
-            justify-content: flex-start;
-            padding-right: 0;
-            padding-left: 55%;
-        }
-
-        .timeline-content {
-            background: rgba(255,255,255,0.05);
-            padding: 25px 30px;
-            border-radius: 15px;
-            max-width: 400px;
-            margin: 0 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .timeline-content h4 {
-            color: var(--accent);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .timeline-content p {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* Dashboard */
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .dashboard-card {
-            background: rgba(255,255,255,0.03);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s ease;
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 196, 140, 0.1);
-            border-color: rgba(0, 196, 140, 0.3);
-        }
-
-        .dashboard-card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .dashboard-card.hard h4 { color: var(--accent); }
-        .dashboard-card.soft h4 { color: var(--accent-alt); }
-        .dashboard-card.growth h4 { color: var(--accent-purple); }
-        .dashboard-card.career h4 { color: var(--accent-teal); }
-
-        .skill-bar {
+            color: rgba(255,255,255,0.6);
             margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
-
-        .skill-label {
+        
+        .timer-display {
             display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        .skill-track {
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .skill-fill {
-            height: 100%;
-            background: var(--gradient-1);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        .skill-list {
-            list-style: none;
-        }
-
-        .skill-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+        }
+        
+        .timer-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(145deg, rgba(0, 196, 140, 0.15), rgba(11, 26, 51, 0.8));
+            border: 1px solid rgba(0, 196, 140, 0.3);
+            border-radius: 12px;
+            padding: 12px 18px;
+            min-width: 80px;
+            box-shadow: 0 8px 32px rgba(0, 196, 140, 0.2);
+        }
+        
+        .timer-block span:first-child {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00C48C, #FFB800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(0, 196, 140, 0.5);
+        }
+        
+        .timer-unit {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .timer-sep {
+            font-size: 2rem;
+            font-weight: 700;
+            color: rgba(0, 196, 140, 0.6);
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
         }
 
-        .skill-list li::before {
-            content: '●';
-            color: var(--accent);
-        }
-
-        /* Table */
         .projects-table {
             width: 100%;
             border-collapse: collapse;
@@ -523,12 +415,10 @@
             overflow: hidden;
         }
 
-        .projects-table th,
-        .projects-table td {
+        .projects-table th, .projects-table td {
             padding: 18px 20px;
             text-align: left;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
         }
 
         .projects-table th {
@@ -540,21 +430,9 @@
             letter-spacing: 1px;
         }
 
-        .projects-table td {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.85);
-        }
+        .projects-table td { font-size: 0.95rem; color: rgba(255,255,255,0.85); }
+        .projects-table tr:hover td { background: rgba(0, 196, 140, 0.1); }
 
-        .projects-table tr:hover td {
-            background: rgba(0, 196, 140, 0.1);
-            transform: scale(1.01);
-        }
-
-        .projects-table tbody tr {
-            transition: all 0.3s ease;
-        }
-
-        /* Certificate */
         .certificate-preview {
             background: linear-gradient(135deg, rgba(255, 184, 0, 0.1), rgba(0, 196, 140, 0.1));
             border: 3px solid var(--accent-alt);
@@ -564,36 +442,10 @@
             max-width: 700px;
             margin: 0 auto;
             position: relative;
-            animation: certGlow 3s ease-in-out infinite;
         }
 
-        @keyframes certGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 184, 0, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(255, 184, 0, 0.4); }
-        }
-
-        .certificate-preview::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 1px solid rgba(255,184,0,0.3);
-            border-radius: 15px;
-        }
-
-        .certificate-preview h3 {
-            font-size: 2rem;
-            color: var(--accent-alt);
-            margin-bottom: 10px;
-        }
-
-        .certificate-preview .cert-title {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-        }
-
+        .certificate-preview h3 { font-size: 2rem; color: var(--accent-alt); margin-bottom: 10px; }
+        .certificate-preview .cert-title { font-size: 1.5rem; margin-bottom: 30px; }
         .certificate-preview .cert-name {
             font-size: 2.5rem;
             font-weight: 800;
@@ -603,27 +455,10 @@
             background-clip: text;
             margin-bottom: 20px;
         }
+        .certificate-preview .cert-details { display: flex; justify-content: center; gap: 40px; margin-top: 30px; }
+        .cert-details span { display: flex; align-items: center; gap: 8px; color: var(--gray); }
 
-        .certificate-preview .cert-details {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-        }
-
-        .cert-details span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--gray);
-        }
-
-        /* ESG Section */
-        .esg-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
+        .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 
         .esg-card {
             background: rgba(255,255,255,0.03);
@@ -633,7 +468,6 @@
             text-align: center;
             transition: all 0.4s ease;
             position: relative;
-            overflow: hidden;
         }
 
         .esg-card::before {
@@ -650,10 +484,7 @@
         .esg-card.s::before { background: linear-gradient(90deg, var(--accent-alt), transparent); }
         .esg-card.g::before { background: linear-gradient(90deg, var(--accent-purple), transparent); }
 
-        .esg-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
+        .esg-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); }
 
         .esg-card .esg-icon {
             width: 80px;
@@ -670,84 +501,31 @@
         .esg-card.s .esg-icon { background: rgba(255, 184, 0, 0.2); }
         .esg-card.g .esg-icon { background: rgba(168, 85, 247, 0.2); }
 
-        .esg-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
+        .esg-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
         .esg-card.e h3 { color: var(--accent); }
         .esg-card.s h3 { color: var(--accent-alt); }
         .esg-card.g h3 { color: var(--accent-purple); }
 
-        .esg-card ul {
-            list-style: none;
-            text-align: left;
-        }
+        .esg-card ul { list-style: none; text-align: left; }
+        .esg-card li { padding: 10px 0; font-size: 0.9rem; color: rgba(255,255,255,0.8); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .esg-card li::before { content: '→'; margin-right: 10px; color: var(--accent); }
 
-        .esg-card li {
-            padding: 10px 0;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.8);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .esg-card li::before {
-            content: '→';
-            margin-right: 10px;
-            color: var(--accent);
-        }
-
-        /* Entrepreneurship */
-        .biz-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-
+        .biz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
         .biz-card {
             background: rgba(255,255,255,0.03);
             border-radius: 20px;
             padding: 35px;
             border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
         }
 
-        .biz-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .biz-card h3 { font-size: 1.4rem; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .biz-card h3 span { font-size: 28px; }
+        .biz-card ul { list-style: none; }
+        .biz-card li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.95rem; display: flex; align-items: flex-start; gap: 12px; }
+        .biz-card li::before { content: '💡'; flex-shrink: 0; }
 
-        .biz-card h3 span {
-            font-size: 28px;
-        }
-
-        .biz-card ul {
-            list-style: none;
-        }
-
-        .biz-card li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .biz-card li::before {
-            content: '💡';
-            flex-shrink: 0;
-        }
-
-        /* Final section */
-        .final-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
-
+        .final-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
         .final-card {
             background: rgba(255,255,255,0.03);
             border-radius: 20px;
@@ -755,60 +533,24 @@
             border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
             transition: all 0.4s ease;
-            cursor: pointer;
+            position: relative;
         }
+        .final-card:hover { transform: translateY(-10px) scale(1.02); border-color: var(--accent); background: rgba(0, 196, 140, 0.08); }
+        .final-icon { font-size: 50px; margin-bottom: 20px; }
+        .final-card h4 { font-size: 1.2rem; margin-bottom: 15px; color: var(--accent); }
+        .final-card p { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
 
-        .final-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--accent);
-            background: rgba(0, 196, 140, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 196, 140, 0.15);
-        }
-
-        .final-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-        }
-
-        .final-card h4 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--accent);
-        }
-
-        .final-card p {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* Age groups */
-        .age-comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
+        .age-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .age-card {
             background: rgba(255,255,255,0.03);
             border-radius: 20px;
             padding: 35px;
             border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.4s ease;
+            position: relative;
         }
-
-        .age-card:hover {
-            transform: scale(1.02);
-            border-color: var(--accent);
-            box-shadow: 0 15px 40px rgba(0, 196, 140, 0.1);
-        }
-
-        .age-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
+        .age-card:hover { transform: scale(1.02); border-color: var(--accent); }
+        .age-header { display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
         .age-icon {
             width: 70px;
             height: 70px;
@@ -819,30 +561,11 @@
             justify-content: center;
             font-size: 32px;
         }
+        .age-card h3 { font-size: 1.5rem; }
+        .age-card ul { list-style: none; }
+        .age-card li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.95rem; display: flex; align-items: center; gap: 12px; }
+        .age-card li::before { content: '✓'; color: var(--accent); }
 
-        .age-card h3 {
-            font-size: 1.5rem;
-        }
-
-        .age-card ul {
-            list-style: none;
-        }
-
-        .age-card li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .age-card li::before {
-            content: '✓';
-            color: var(--accent);
-        }
-
-        /* Navigation - left side with labels */
         .nav-sidebar {
             position: fixed;
             left: 0;
@@ -858,13 +581,7 @@
             backdrop-filter: blur(10px);
         }
 
-        .nav-logo {
-            text-align: center;
-            padding: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 10px;
-        }
-
+        .nav-logo { text-align: center; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px; }
         .nav-logo h3 {
             font-size: 1.2rem;
             background: var(--gradient-1);
@@ -872,11 +589,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .nav-logo span {
-            font-size: 0.7rem;
-            color: var(--gray);
-        }
+        .nav-logo span { font-size: 0.7rem; color: var(--gray); }
 
         .nav-item {
             padding: 12px 20px;
@@ -890,354 +603,57 @@
             border-left: 3px solid transparent;
         }
 
-        .nav-item:hover {
-            background: rgba(0, 196, 140, 0.1);
-            color: var(--white);
-        }
+        .nav-item:hover { background: rgba(0, 196, 140, 0.1); color: var(--white); }
+        .nav-item.active { background: rgba(0, 196, 140, 0.15); color: var(--accent); border-left-color: var(--accent); }
+        .nav-item-num { font-weight: 700; opacity: 0.5; min-width: 20px; }
 
-        .nav-item.active {
-            background: rgba(0, 196, 140, 0.15);
-            color: var(--accent);
-            border-left-color: var(--accent);
-        }
+        .slide { padding: 60px 80px 60px 280px; }
 
-        .nav-item-num {
-            font-weight: 700;
-            opacity: 0.5;
-            min-width: 20px;
-        }
-
-        .slide {
-            min-height: 100vh;
-            padding: 60px 80px 60px 280px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Scroll indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--gray);
-            font-size: 0.85rem;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .scroll-hint:hover {
-            color: var(--accent);
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
-
-        /* Animated gradient border */
-        .gradient-border {
-            position: relative;
-            background: rgba(255,255,255,0.03);
-            border-radius: 20px;
-            padding: 2px;
-        }
-
-        .gradient-border::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-            padding: 2px;
-            background: var(--gradient-1);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: borderRotate 4s linear infinite;
-        }
-
-        @keyframes borderRotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
-        /* Glowing button effect */
-        .glow-btn {
-            background: var(--gradient-1);
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glow-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .glow-btn:hover::before {
-            left: 100%;
-        }
-
-        .glow-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.4);
-        }
-
-        /* Count up animation */
-        .counter {
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .counter:hover {
-            transform: scale(1.1);
-            color: var(--accent);
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-        }
-
-        .tooltip::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            color: var(--white);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid var(--accent);
-        }
-
-        .tooltip:hover::after {
-            opacity: 1;
-            visibility: visible;
-            bottom: calc(100% + 10px);
-        }
-
-        /* Interactive quiz-style element */
-        .quiz-option {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .quiz-option:hover {
-            background: rgba(0, 196, 140, 0.1);
-            border-color: var(--accent);
-            transform: translateX(10px);
-        }
-
-        /* Stat card with icon */
-        .stat-card-animated {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.4s ease;
-        }
-
-        .stat-card-animated:hover {
-            background: rgba(0, 196, 140, 0.08);
-            border-color: var(--accent);
-            transform: translateY(-10px) scale(1.02);
-        }
-
-        .stat-card-animated .stat-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            display: block;
-            animation: iconPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .slide {
-                padding: 40px 40px 40px 220px;
-            }
-            
-            .nav-sidebar {
-                width: 180px;
-            }
-            
-            .nav-item {
-                font-size: 0.7rem;
-                padding: 10px 15px;
-            }
-            
-            .title-slide h1 {
-                font-size: 3rem;
-            }
-            
-            .grid-2, .grid-3, .grid-4, 
-            .dashboard, .esg-grid,
-            .biz-grid, .final-grid,
-            .age-comparison {
-                grid-template-columns: 1fr;
-            }
-            
-            .timeline::before {
-                left: 20px;
-            }
-            
-            .timeline-item,
-            .timeline-item:nth-child(even) {
-                padding-left: 50px;
-                padding-right: 0;
-                justify-content: flex-start;
-            }
-            
-            .timeline-item::before,
-            .timeline-item:nth-child(even)::before {
-                left: 20px;
-            }
-            
-            .timeline-content {
-                margin: 0;
-            }
-            
-            .stats-row {
-                flex-wrap: wrap;
-                gap: 30px;
-            }
-        }
-
-        /* Skill Cards */
-        .skill-card {
+        .role-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px;
             padding: 25px;
+            text-align: center;
             transition: all 0.4s ease;
             cursor: pointer;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0, 196, 140, 0.15);
-        }
-
-        .skill-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .skill-card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: var(--white);
-        }
-
-        .skill-progress {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .skill-bar-custom {
-            flex: 1;
-            height: 10px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .skill-fill-custom {
-            height: 100%;
-            background: var(--gradient-1);
-            border-radius: 5px;
-            transition: width 1.5s ease;
-        }
-
-        .skill-percent {
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .skill-tags {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .skill-tags li {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            background: rgba(0, 196, 140, 0.1);
-            border-radius: 12px;
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* Interactive Cards */
-        .interactive-card {
-            cursor: pointer;
             position: relative;
-            overflow: hidden;
         }
 
-        .interactive-card .card-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
+        .role-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            border-color: var(--accent);
+            background: rgba(0, 196, 140, 0.08);
         }
 
-        .interactive-card.expanded .card-content {
-            max-height: 300px;
+        .dashboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .dashboard-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+            position: relative;
         }
+        .dashboard-card:hover { transform: translateY(-5px); border-color: rgba(0, 196, 140, 0.3); }
+        .dashboard-card h4 { font-size: 1.1rem; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .dashboard-card.hard h4 { color: var(--accent); }
+        .dashboard-card.soft h4 { color: var(--accent-alt); }
+        .dashboard-card.growth h4 { color: var(--accent-purple); }
 
-        .expand-hint {
-            font-size: 0.75rem;
-            color: var(--gray);
-            text-align: center;
-            margin-top: 15px;
-            opacity: 0.7;
-        }
+        .skill-bar { margin-bottom: 15px; }
+        .skill-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; }
+        .skill-track { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+        .skill-fill { height: 100%; background: var(--gradient-1); border-radius: 4px; }
 
-        /* Skills Wheel */
+        .skill-list { list-style: none; }
+        .skill-list li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }
+        .skill-list li::before { content: '●'; color: var(--accent); }
+
         .skills-wheel {
             position: relative;
-            width: 500px;
-            height: 500px;
+            width: 550px;
+            height: 550px;
             margin: 0 auto;
         }
 
@@ -1246,27 +662,20 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 140px;
-            height: 140px;
-            background: var(--gradient-1);
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(135deg, #00C48C, #FFB800);
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            box-shadow: 0 0 40px rgba(0, 196, 140, 0.4);
+            box-shadow: 0 0 60px rgba(0, 196, 140, 0.5), inset 0 0 30px rgba(255, 255, 255, 0.1);
         }
 
-        .center-icon {
-            font-size: 40px;
-        }
-
-        .center-text {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-align: center;
-        }
+        .center-icon { font-size: 48px; }
+        .center-text { font-size: 0.85rem; font-weight: 700; text-align: center; color: #0B1A33; }
 
         .wheel-item {
             position: absolute;
@@ -1282,228 +691,157 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 180px;
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
+            width: 200px;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
 
-        .wheel-segment:hover {
-            background: rgba(0, 196, 140, 0.15);
-            border-color: var(--accent);
-            transform: scale(1.05);
+        .wheel-segment:hover { 
+            background: linear-gradient(135deg, rgba(0, 196, 140, 0.25), rgba(255, 184, 0, 0.15)); 
+            border-color: #00C48C; 
+            transform: scale(1.08) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 196, 140, 0.25);
         }
+        
+        .wheel-segment:nth-child(1) { border-top: 3px solid #00C48C; }
+        .wheel-segment:nth-child(2) { border-top: 3px solid #FFB800; }
+        .wheel-segment:nth-child(3) { border-top: 3px solid #A855F7; }
+        .wheel-segment:nth-child(4) { border-top: 3px solid #2DD4BF; }
+        .wheel-segment:nth-child(5) { border-top: 3px solid #F472B6; }
+        .wheel-segment:nth-child(6) { border-top: 3px solid #60A5FA; }
+        .wheel-segment:nth-child(7) { border-top: 3px solid #34D399; }
+        .wheel-segment:nth-child(8) { border-top: 3px solid #FBBF24; }
+        
+        .wheel-icon { display: block; font-size: 32px; margin-bottom: 10px; }
+        .wheel-label { font-size: 0.85rem; color: rgba(255,255,255,0.95); font-weight: 600; }
 
-        .wheel-icon {
-            display: block;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .wheel-label {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.9);
-            font-weight: 500;
-        }
-
-        /* Mini Cards */
         .mini-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .mini-card:hover {
-            background: rgba(0, 196, 140, 0.08);
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .mini-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-        }
-
-        .mini-card h4 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-            color: var(--accent);
-        }
-
-        .mini-card p {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Animated counters */
-        @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-count {
-            animation: countUp 0.8s ease forwards;
-        }
-
-        /* Hover effects */
-        .card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .card:hover::after {
-            left: 100%;
-        }
-
-        /* Progress bar animation */
-        .progress-animate {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-animate::after {
+        
+        .mini-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 2s infinite;
+            height: 3px;
+            background: linear-gradient(90deg, #00C48C, #FFB800, #A855F7, #2DD4BF);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        
+        .mini-card:hover::before { opacity: 1; }
+        .mini-card:hover { 
+            background: linear-gradient(145deg, rgba(0, 196, 140, 0.12), rgba(255, 184, 0, 0.05)); 
+            border-color: rgba(0, 196, 140, 0.4); 
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 196, 140, 0.2);
         }
+        .mini-icon { font-size: 38px; margin-bottom: 15px; display: inline-block; }
+        .mini-card:hover .mini-icon { transform: scale(1.15); transition: transform 0.3s ease; }
+        .mini-card h4 { font-size: 1.05rem; margin-bottom: 10px; color: #fff; font-weight: 600; }
+        .mini-card p { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
 
-        /* Interactive toggle */
-        .toggle-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .toggle-btn {
-            padding: 12px 30px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 25px;
-            color: rgba(255,255,255,0.7);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .toggle-btn.active {
-            background: var(--accent);
-            color: var(--primary);
-            border-color: var(--accent);
-            font-weight: 600;
-        }
-
-        .toggle-btn:hover:not(.active) {
-            border-color: var(--accent);
-            color: var(--white);
-        }
-
-        /* Skill level indicators */
-        .skill-level {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 8px 0;
-        }
-
-        .level-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .level-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-        }
-
-        .level-dot.filled {
-            background: var(--accent);
-        }
-
-        .level-dot.gold {
-            background: var(--accent-alt);
-        }
-
-        /* Timeline v2 */
-        .timeline-v2 {
+        .skill-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            padding: 20px 0;
         }
-
-        .timeline-v2::before {
+        
+        .skill-card::before {
             content: '';
             position: absolute;
-            left: 20px;
             top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient-1);
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00C48C, #FFB800);
+            border-radius: 20px 20px 0 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        .timeline-v2-item {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 30px;
+        
+        .skill-card:hover::before { opacity: 1; }
+        .skill-card:hover { 
+            transform: translateY(-10px); 
+            border-color: rgba(0, 196, 140, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 196, 140, 0.2);
         }
+        .skill-icon { 
+            font-size: 44px; 
+            margin-bottom: 18px; 
+            display: inline-block;
+            filter: drop-shadow(0 4px 8px rgba(0, 196, 140, 0.3));
+        }
+        .skill-card h4 { font-size: 1.15rem; margin-bottom: 18px; font-weight: 600; color: #fff; }
+        .skill-progress { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; }
+        .skill-bar-custom { flex: 1; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
+        .skill-fill-custom { height: 100%; background: linear-gradient(90deg, #00C48C, #FFB800); border-radius: 5px; transition: width 1.5s ease; box-shadow: 0 0 10px rgba(0, 196, 140, 0.5); }
+        .skill-percent { font-weight: 700; font-size: 1.1rem; }
+        .skill-card:nth-child(1) .skill-percent { color: #00C48C; }
+        .skill-card:nth-child(2) .skill-percent { color: #FFB800; }
+        .skill-card:nth-child(3) .skill-percent { color: #A855F7; }
+        .skill-card:nth-child(4) .skill-percent { color: #2DD4BF; }
+        .skill-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+        .skill-tags li { font-size: 0.75rem; padding: 6px 12px; background: rgba(0, 196, 140, 0.15); border: 1px solid rgba(0, 196, 140, 0.25); border-radius: 15px; color: rgba(255,255,255,0.85); transition: all 0.3s ease; }
+        .skill-tags li:hover { background: rgba(0, 196, 140, 0.3); transform: translateY(-2px); }
 
-        .timeline-v2-item::before {
+        .interactive-card { 
+            cursor: pointer; 
+            position: relative; 
+            overflow: hidden; 
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .interactive-card::before {
             content: '';
             position: absolute;
-            left: 11px;
-            top: 5px;
-            width: 22px;
-            height: 22px;
-            background: var(--primary);
-            border: 3px solid var(--accent);
-            border-radius: 50%;
-            z-index: 1;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #A855F7, #2DD4BF);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        .timeline-v2-content {
-            background: rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
+        
+        .interactive-card:hover::before { opacity: 1; }
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 50px rgba(168, 85, 247, 0.15);
         }
+        
+        .interactive-card .card-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; padding-top: 0; }
+        .interactive-card.expanded .card-content { max-height: 300px; padding-top: 15px; }
+        .expand-hint { font-size: 0.75rem; color: var(--gray); text-align: center; margin-top: 15px; opacity: 0.7; }
 
-        .timeline-v2-content h4 {
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-
-        .timeline-v2-content p {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
+        @media (max-width: 1024px) {
+            .slide { padding: 40px 40px 40px 220px; }
+            .nav-sidebar { width: 180px; }
+            .title-slide h1 { font-size: 3rem; }
+            .grid-2, .grid-3, .grid-4, .dashboard, .esg-grid, .biz-grid, .final-grid, .age-comparison { grid-template-columns: 1fr; }
+            .stats-row { flex-wrap: wrap; gap: 30px; }
         }
     </style>
 </head>
@@ -1531,7 +869,7 @@
         <div class="nav-item" data-slide="14"><span class="nav-item-num">15</span>Английский</div>
         <div class="nav-item" data-slide="15"><span class="nav-item-num">16</span>Финал</div>
         <div class="nav-item" data-slide="16"><span class="nav-item-num">17</span>Результаты</div>
-        <div class="nav-item" data-slide="17"><span class="nav-item-num">18</span>Сертификат</div>
+        <div class="nav-item" data-slide="17"><span class="nav-item-num">18</span>Интерактив</div>
         <div class="nav-item" data-slide="18"><span class="nav-item-num">19</span>Контакты</div>
     </nav>
 
@@ -1548,21 +886,21 @@
         <p class="subtitle">Лаборатория Будущего</p>
         <div class="badge">Презентация программы 2026</div>
         <div class="stats-row">
-            <div class="stat-box">
-                <div class="stat-number">5</div>
-                <div class="stat-label">смен</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">14</div>
-                <div class="stat-label">дней</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">4</div>
-                <div class="stat-label">отряда</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">2</div>
-                <div class="stat-label">проекта/отряд</div>
+            <div class="stat-box"><div class="stat-number">5</div><div class="stat-label">смен</div></div>
+            <div class="stat-box"><div class="stat-number">14</div><div class="stat-label">дней</div></div>
+            <div class="stat-box"><div class="stat-number">4</div><div class="stat-label">отряда</div></div>
+            <div class="stat-box"><div class="stat-number">2</div><div class="stat-label">проекта/отряд</div></div>
+        </div>
+        <div class="timer-container">
+            <div class="timer-label">До старта:</div>
+            <div class="timer-display">
+                <div class="timer-block"><span id="timer-days">00</span><span class="timer-unit">дней</span></div>
+                <div class="timer-sep">:</div>
+                <div class="timer-block"><span id="timer-hours">00</span><span class="timer-unit">часов</span></div>
+                <div class="timer-sep">:</div>
+                <div class="timer-block"><span id="timer-minutes">00</span><span class="timer-unit">минут</span></div>
+                <div class="timer-sep">:</div>
+                <div class="timer-block"><span id="timer-seconds">00</span><span class="timer-unit">секунд</span></div>
             </div>
         </div>
         <div class="slide-number">01 / 19</div>
@@ -1572,43 +910,32 @@
     <section class="slide slide-dark content-slide">
         <h2>Что такое ИнноСити?</h2>
         <p class="slide-desc">Образовательный лагерь полного погружения для детей 7-13 лет. 14 дней реальных проектов, предпринимательства и инноваций.</p>
-        
-        <div class="grid-3">
+        <div class="grid-4">
             <div class="card">
                 <div class="card-icon">🎯</div>
                 <h3>Проектный подход</h3>
                 <p>Полный цикл: от идеи до защиты решения</p>
-                <ul>
-                    <li>Формулирование гипотезы</li>
-                    <li>Исследование</li>
-                    <li>Создание прототипа</li>
-                    <li>Публичная защита</li>
-                </ul>
+                <ul><li>Формулирование гипотезы</li><li>Исследование</li><li>Создание прототипа</li><li>Публичная защита</li></ul>
             </div>
             <div class="card">
                 <div class="card-icon">💼</div>
                 <h3>Предпринимательство</h3>
                 <p>Бизнес-механики и навыки XXI века</p>
-                <ul>
-                    <li>Бюджетирование</li>
-                    <li>Контракты</li>
-                    <li>Переговоры</li>
-                    <li>Командная экономика</li>
-                </ul>
+                <ul><li>Бюджетирование</li><li>Контракты</li><li>Переговоры</li><li>Командная экономика</li></ul>
             </div>
             <div class="card">
                 <div class="card-icon">🏙️</div>
                 <h3>ESG + Урбанистика</h3>
                 <p>Устойчивое развитие города</p>
-                <ul>
-                    <li>Экология</li>
-                    <li>Городское управление</li>
-                    <li>Социальные проекты</li>
-                    <li>Зелёная инфраструктура</li>
-                </ul>
+                <ul><li>Экология</li><li>Городское управление</li><li>Социальные проекты</li><li>Зелёная инфраструктура</li></ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>Искусственный Интеллект</h3>
+                <p>Технологии будущего уже сегодня</p>
+                <ul><li>Машинное обучение</li><li>Работа с данными</li><li>Нейросети и ChatGPT</li><li>Этика ИИ</li></ul>
             </div>
         </div>
-        
         <div class="slide-number">02 / 19</div>
     </section>
 
@@ -1616,55 +943,24 @@
     <section class="slide slide-accent content-slide">
         <h2>Формат программы</h2>
         <p class="slide-desc">Как устроен лагерь — ключевые параметры</p>
-        
         <div class="grid-4" style="margin-bottom: 40px;">
-            <div class="card" style="text-align: center;">
-                <div class="card-icon" style="margin: 0 auto 20px;">📅</div>
-                <h3>5 смен</h3>
-                <p>По 14 дней каждая</p>
-            </div>
-            <div class="card" style="text-align: center;">
-                <div class="card-icon" style="margin: 0 auto 20px;">👥</div>
-                <h3>До 50 детей</h3>
-                <p>В каждой смене</p>
-            </div>
-            <div class="card" style="text-align: center;">
-                <div class="card-icon" style="margin: 0 auto 20px;">🏠</div>
-                <h3>4 отряда</h3>
-                <p>По 10-12 человек</p>
-            </div>
-            <div class="card" style="text-align: center;">
-                <div class="card-icon" style="margin: 0 auto 20px;">🎓</div>
-                <h3>2 проекта</h3>
-                <p>Каждый отряд</p>
-            </div>
+            <div class="card" style="text-align: center;"><div class="card-icon" style="margin: 0 auto 20px;">📅</div><h3>5 смен</h3><p>По 14 дней каждая</p></div>
+            <div class="card" style="text-align: center;"><div class="card-icon" style="margin: 0 auto 20px;">👥</div><h3>До 50 детей</h3><p>В каждой смене</p></div>
+            <div class="card" style="text-align: center;"><div class="card-icon" style="margin: 0 auto 20px;">🏠</div><h3>4 отряда</h3><p>По 10-12 человек</p></div>
+            <div class="card" style="text-align: center;"><div class="card-icon" style="margin: 0 auto 20px;">🎓</div><h3>2 проекта</h3><p>Каждый отряд</p></div>
         </div>
-        
         <div class="grid-2">
             <div class="card">
                 <h3>🎭 Ролевой формат</h3>
                 <p>Каждые 2-3 дня — новая роль. За смену ребёнок попробует 5-7 различных позиций.</p>
-                <div class="tags">
-                    <span class="tag">Шерпа</span>
-                    <span class="tag">Спикер</span>
-                    <span class="tag">Координатор</span>
-                    <span class="tag">Аналитик</span>
-                    <span class="tag">Дизайнер</span>
-                    <span class="tag">Мастер</span>
-                </div>
+                <div class="tags"><span class="tag">Шерпа</span><span class="tag">Спикер</span><span class="tag">Координатор</span><span class="tag">Аналитик</span><span class="tag">Дизайнер</span><span class="tag">Мастер</span></div>
             </div>
             <div class="card">
                 <h3>🌍 Полное погружение</h3>
-                <p>Дети живут в легенде 24/7. Ежедневные достижения, контракты, переговоры, жители-персонажи.</p>
-                <div class="tags">
-                    <span class="tag">Хранители</span>
-                    <span class="tag">Департаменты</span>
-                    <span class="tag">Совет городов</span>
-                    <span class="tag">Миссии</span>
-                </div>
+                <p>Дети живут в легенде 24/7. Достижения, контракты, переговоры, жители-персонажи.</p>
+                <div class="tags"><span class="tag">Хранители</span><span class="tag">Департаменты</span><span class="tag">Совет городов</span><span class="tag">Миссии</span></div>
             </div>
         </div>
-        
         <div class="slide-number">03 / 19</div>
     </section>
 
@@ -1672,54 +968,12 @@
     <section class="slide slide-dark content-slide">
         <h2>4 Департамента</h2>
         <p class="slide-desc">Каждый ребёнок выбирает направление и работает в команде</p>
-        
         <div class="grid-2">
-            <div class="card">
-                <div class="card-icon">⚙️</div>
-                <h3>Инженерный штаб</h3>
-                <p>Прототипирование, конструирование, макетирование, 3D-моделирование</p>
-                <ul>
-                    <li>Инженер-конструктор</li>
-                    <li>Чертёжник</li>
-                    <li>Тестировщик</li>
-                    <li>Мастер-сборщик</li>
-                </ul>
-            </div>
-            <div class="card">
-                <div class="card-icon">💻</div>
-                <h3>Цифровой штаб</h3>
-                <p>Данные, интерфейсы, алгоритмы, веб-разработка</p>
-                <ul>
-                    <li>Аналитик данных</li>
-                    <li>Системный архитектор</li>
-                    <li>Веб-разработчик</li>
-                    <li>UX-дизайнер</li>
-                </ul>
-            </div>
-            <div class="card">
-                <div class="card-icon">🌱</div>
-                <h3>Эко-лаборатория</h3>
-                <p>Экология, устойчивость, ESG-проекты</p>
-                <ul>
-                    <li>Эко-аналитик</li>
-                    <li>Лаборант</li>
-                    <li>Эксперт устойчивости</li>
-                    <li>Природовед</li>
-                </ul>
-            </div>
-            <div class="card">
-                <div class="card-icon">📰</div>
-                <h3>Медиацентр</h3>
-                <p>Коммуникации, контент, PR, дизайн</p>
-                <ul>
-                    <li>Журналист</li>
-                    <li>Видеограф</li>
-                    <li>PR-менеджер</li>
-                    <li>Графический дизайнер</li>
-                </ul>
-            </div>
+            <div class="card"><div class="card-icon">⚙️</div><h3>Инженерный штаб</h3><p>Прототипирование, конструирование, макетирование, 3D-моделирование</p><ul><li>Инженер-конструктор</li><li>Чертёжник</li><li>Тестировщик</li><li>Мастер-сборщик</li></ul></div>
+            <div class="card"><div class="card-icon">💻</div><h3>Цифровой штаб</h3><p>Данные, интерфейсы, алгоритмы, веб-разработка</p><ul><li>Аналитик данных</li><li>Системный архитектор</li><li>Веб-разработчик</li><li>UX-дизайнер</li></ul></div>
+            <div class="card"><div class="card-icon">🌱</div><h3>Эко-лаборатория</h3><p>Экология, устойчивость, ESG-проекты</p><ul><li>Эко-аналитик</li><li>Лаборант</li><li>Эксперт устойчивости</li><li>Природовед</li></ul></div>
+            <div class="card"><div class="card-icon">📰</div><h3>Медиацентр</h3><p>Коммуникации, контент, PR, дизайн</p><ul><li>Журналист</li><li>Видеограф</li><li>PR-менеджер</li><li>Графический дизайнер</li></ul></div>
         </div>
-        
         <div class="slide-number">04 / 19</div>
     </section>
 
@@ -1727,59 +981,19 @@
     <section class="slide slide-gradient content-slide">
         <h2>Проектные направления</h2>
         <p class="slide-desc">Примеры тем проектов для каждого департамента</p>
-        
         <table class="projects-table">
-            <thead>
-                <tr>
-                    <th>Направление</th>
-                    <th>Проект</th>
-                    <th>Описание</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Направление</th><th>Проект</th><th>Описание</th></tr></thead>
             <tbody>
-                <tr>
-                    <td>🏙️ Умный город (IoT)</td>
-                    <td>Система мониторинга воздуха</td>
-                    <td>Разработка датчиков и сенсорной сети для города</td>
-                </tr>
-                <tr>
-                    <td>📊 Городские данные</td>
-                    <td>Дашборд транспорта</td>
-                    <td>Визуализация и анализ транспортных потоков</td>
-                </tr>
-                <tr>
-                    <td>🤖 ИИ и алгоритмы</td>
-                    <td>Оптимизация энергопотребления</td>
-                    <td>Алгоритмы управления энергией здания</td>
-                </tr>
-                <tr>
-                    <td>📱 Цифровые сервисы</td>
-                    <td>Приложение «Умный двор»</td>
-                    <td>Мобильное приложение для жителей</td>
-                </tr>
-                <tr>
-                    <td>🏗️ 3D-моделирование</td>
-                    <td>Цифровой двойник</td>
-                    <td>3D-сканирование и реверс-инжиниринг</td>
-                </tr>
-                <tr>
-                    <td>🏭 Производство</td>
-                    <td>Прототип 3D-печати</td>
-                    <td>Аддитивные технологии</td>
-                </tr>
-                <tr>
-                    <td>🏛️ Архитектура</td>
-                    <td>Благоустройство двора</td>
-                    <td>Ландшафтный и городской дизайн</td>
-                </tr>
-                <tr>
-                    <td>⚡ Энергетика</td>
-                    <td>Модель солнечной панели</td>
-                    <td>Возобновляемые источники энергии</td>
-                </tr>
+                <tr><td>🏙️ Умный город (IoT)</td><td>Система мониторинга воздуха</td><td>Разработка датчиков и сенсорной сети для города</td></tr>
+                <tr><td>📊 Городские данные</td><td>Дашборд транспорта</td><td>Визуализация и анализ транспортных потоков</td></tr>
+                <tr><td>🤖 ИИ и алгоритмы</td><td>Оптимизация энергопотребления</td><td>Алгоритмы управления энергией здания</td></tr>
+                <tr><td>📱 Цифровые сервисы</td><td>Приложение «Умный двор»</td><td>Мобильное приложение для жителей</td></tr>
+                <tr><td>🏗️ 3D-моделирование</td><td>Цифровой двойник</td><td>3D-сканирование и реверс-инжиниринг</td></tr>
+                <tr><td>🏭 Производство</td><td>Прототип 3D-печати</td><td>Аддитивные технологии</td></tr>
+                <tr><td>🏛️ Архитектура</td><td>Благоустройство двора</td><td>Ландшафтный и городской дизайн</td></tr>
+                <tr><td>⚡ Энергетика</td><td>Модель солнечной панели</td><td>Возобновляемые источники энергии</td></tr>
             </tbody>
         </table>
-        
         <div class="slide-number">05 / 19</div>
     </section>
 
@@ -1787,50 +1001,12 @@
     <section class="slide slide-dark content-slide">
         <h2>Задачи участников</h2>
         <p class="slide-desc">Что делают дети в каждом проекте — детализация по этапам</p>
-        
         <div class="grid-2">
-            <div class="card">
-                <h3>📋 Этап 1: Диагностика (Дни 1-5)</h3>
-                <ul>
-                    <li>Исследование проблемы города</li>
-                    <li>Сбор данных и анализ</li>
-                    <li>Формулирование гипотезы</li>
-                    <li>Поиск аналогов и решений</li>
-                    <li>Первая презентация идеи</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>🔧 Этап 2: Разработка (Дни 6-10)</h3>
-                <ul>
-                    <li>Проектирование решения</li>
-                    <li>Создание прототипа</li>
-                    <li>Тестирование и итерации</li>
-                    <li>Работа с данными</li>
-                    <li>Подготовка материалов</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>🚀 Этап 3: Защита (Дни 11-14)</h3>
-                <ul>
-                    <li>Финальная презентация</li>
-                    <li>Подготовка стенда</li>
-                    <li>Публичное выступление</li>
-                    <li>Ответы на вопросы</li>
-                    <li>Получение обратной связи</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>💼 Предпринимательская часть</h3>
-                <ul>
-                    <li>Бюджет проекта</li>
-                    <li>Поиск ресурсов</li>
-                    <li>Переговоры с другими отрядами</li>
-                    <li>Питчинг инвесторам</li>
-                    <li>Командная отчётность</li>
-                </ul>
-            </div>
+            <div class="card"><h3>📋 Этап 1: Диагностика (Дни 1-5)</h3><ul><li>Исследование проблемы города</li><li>Сбор данных и анализ</li><li>Формулирование гипотезы</li><li>Поиск аналогов и решений</li><li>Первая презентация идеи</li></ul></div>
+            <div class="card"><h3>🔧 Этап 2: Разработка (Дни 6-10)</h3><ul><li>Проектирование решения</li><li>Создание прототипа</li><li>Тестирование и итерации</li><li>Работа с данными</li><li>Подготовка материалов</li></ul></div>
+            <div class="card"><h3>🚀 Этап 3: Защита (Дни 11-14)</h3><ul><li>Финальная презентация</li><li>Подготовка стенда</li><li>Публичное выступление</li><li>Ответы на вопросы</li><li>Получение обратной связи</li></ul></div>
+            <div class="card"><h3>💼 Предпринимательская часть</h3><ul><li>Бюджет проекта</li><li>Поиск ресурсов</li><li>Переговоры с другими отрядами</li><li>Питчинг инвесторам</li><li>Командная отчётность</li></ul></div>
         </div>
-        
         <div class="slide-number">06 / 19</div>
     </section>
 
@@ -1838,50 +1014,12 @@
     <section class="slide slide-accent content-slide">
         <h2>Предпринимательство</h2>
         <p class="slide-desc">Бизнес-механики, которые осваивают участники</p>
-        
         <div class="biz-grid">
-            <div class="biz-card">
-                <h3><span>💰</span> Экономика</h3>
-                <ul>
-                    <li>Бюджет проекта и его ограничения</li>
-                    <li>Распределение ресурсов между командами</li>
-                    <li>Учёт доходов и расходов</li>
-                    <li>Рентабельность и эффективность</li>
-                    <li>Командная казна</li>
-                </ul>
-            </div>
-            <div class="biz-card">
-                <h3><span>🤝</span> Переговоры</h3>
-                <ul>
-                    <li>Контракты между департаментами</li>
-                    <li>Торги и тендеры</li>
-                    <li>Питчинг проекта</li>
-                    <li>Разрешение конфликтов</li>
-                    <li>Командное принятие решений</li>
-                </ul>
-            </div>
-            <div class="biz-card">
-                <h3><span>📈</span> Маркетинг</h3>
-                <ul>
-                    <li>Продвижение проекта</li>
-                    <li>Работа со стейкхолдерами</li>
-                    <li>PR и коммуникации</li>
-                    <li>Создание бренда</li>
-                    <li>Презентация результатов</li>
-                </ul>
-            </div>
-            <div class="biz-card">
-                <h3><span>⚖️</span> Управление</h3>
-                <ul>
-                    <li>Распределение ролей в команде</li>
-                    <li>Тайм-менеджмент</li>
-                    <li>Постановка целей</li>
-                    <li>Контроль выполнения</li>
-                    <li>Командная ответственность</li>
-                </ul>
-            </div>
+            <div class="biz-card"><h3><span>💰</span> Экономика</h3><ul><li>Бюджет проекта и его ограничения</li><li>Распределение ресурсов между командами</li><li>Учёт доходов и расходов</li><li>Рентабельность и эффективность</li><li>Командная казна</li></ul></div>
+            <div class="biz-card"><h3><span>🤝</span> Переговоры</h3><ul><li>Контракты между департаментами</li><li>Торги и тендеры</li><li>Питчинг проекта</li><li>Разрешение конфликтов</li><li>Командное принятие решений</li></ul></div>
+            <div class="biz-card"><h3><span>📈</span> Маркетинг</h3><ul><li>Продвижение проекта</li><li>Работа со стейкхолдерами</li><li>PR и коммуникации</li><li>Создание бренда</li><li>Презентация результатов</li></ul></div>
+            <div class="biz-card"><h3><span>⚖️</span> Управление</h3><ul><li>Распределение ролей в команде</li><li>Тайм-менеджмент</li><li>Постановка целей</li><li>Контроль выполнения</li><li>Командная ответственность</li></ul></div>
         </div>
-        
         <div class="slide-number">07 / 19</div>
     </section>
 
@@ -1889,51 +1027,12 @@
     <section class="slide slide-dark content-slide">
         <h2>ESG + Урбанистика</h2>
         <p class="slide-desc">Устойчивое развитие и городское планирование</p>
-        
         <div class="esg-grid">
-            <div class="esg-card e">
-                <div class="esg-icon">🌿</div>
-                <h3>E — Экология</h3>
-                <ul>
-                    <li>Системы воздуха и вентиляции</li>
-                    <li>Очистка воды</li>
-                    <li>Утилизация отходов</li>
-                    <li>Зелёные насаждения</li>
-                    <li>Энергоэффективность</li>
-                    <li>Экологический след</li>
-                </ul>
-            </div>
-            <div class="esg-card s">
-                <div class="esg-icon">👥</div>
-                <h3>S — Социальное</h3>
-                <ul>
-                    <li>Безопасность города</li>
-                    <li>Доступная среда</li>
-                    <li>Общественные пространства</li>
-                    <li>Образование и культура</li>
-                    <li>Здоровье населения</li>
-                    <li>Волонтёрство</li>
-                </ul>
-            </div>
-            <div class="esg-card g">
-                <div class="esg-icon">🏛️</div>
-                <h3>G — Управление</h3>
-                <ul>
-                    <li>Городское самоуправление</li>
-                    <li>Прозрачность решений</li>
-                    <li>Участие жителей</li>
-                    <li>Этичное лидерство</li>
-                    <li>Правовая система</li>
-                    <li>Электронное правительство</li>
-                </ul>
-            </div>
+            <div class="esg-card e"><div class="esg-icon">🌿</div><h3>E — Экология</h3><ul><li>Системы воздуха и вентиляции</li><li>Очистка воды</li><li>Утилизация отходов</li><li>Зелёные насаждения</li><li>Энергоэффективность</li><li>Экологический след</li></ul></div>
+            <div class="esg-card s"><div class="esg-icon">👥</div><h3>S — Социальное</h3><ul><li>Безопасность города</li><li>Доступная среда</li><li>Общественные пространства</li><li>Образование и культура</li><li>Здоровье населения</li><li>Волонтёрство</li></ul></div>
+            <div class="esg-card g"><div class="esg-icon">🏛️</div><h3>G — Управление</h3><ul><li>Городское самоуправление</li><li>Прозрачность решений</li><li>Участие жителей</li><li>Этичное лидерство</li><li>Правовая система</li><li>Электронное правительство</li></ul></div>
         </div>
-        
-        <div class="card" style="margin-top: 40px;">
-            <h3>🏙️ Урбанистика — объединяющая тема</h3>
-            <p>Все проекты направлены на решение реальных городских задач. Дети понимают связь между экологией, социальным благополучием и эффективным управлением. Любое решение имеет последствия — учимся мыслить системно.</p>
-        </div>
-        
+        <div class="card" style="margin-top: 40px;"><h3>🏙️ Урбанистика — объединяющая тема</h3><p>Все проекты направлены на решение реальных городских задач. Дети понимают связь между экологией, социальным благополучием и эффективным управлением.</p></div>
         <div class="slide-number">08 / 19</div>
     </section>
 
@@ -1941,40 +1040,16 @@
     <section class="slide slide-gradient content-slide">
         <h2>Возрастные группы</h2>
         <p class="slide-desc">Адаптация задач под возраст участников</p>
-        
         <div class="age-comparison">
             <div class="age-card">
-                <div class="age-header">
-                    <div class="age-icon">👶</div>
-                    <h3>Младшая группа: 7-9 лет</h3>
-                </div>
-                <ul>
-                    <li>Упрощённые прототипы (картон, LEGO, конструктор)</li>
-                    <li>Базовое программирование (Scratch, ScratchJr)</li>
-                    <li>Рисование схем и макетов</li>
-                    <li>Простые эксперименты</li>
-                    <li>Работа в команде без сложных расчётов</li>
-                    <li>Английский: базовые фразы и слова</li>
-                    <li>Направление: знакомство с профессиями</li>
-                </ul>
+                <div class="age-header"><div class="age-icon">👶</div><h3>Младшая группа: 7-9 лет</h3></div>
+                <ul><li>Упрощённые прототипы (картон, LEGO, конструктор)</li><li>Базовое программирование (Scratch, ScratchJr)</li><li>Рисование схем и макетов</li><li>Простые эксперименты</li><li>Работа в команде без сложных расчётов</li><li>Английский: базовые фразы и слова</li></ul>
             </div>
             <div class="age-card">
-                <div class="age-header">
-                    <div class="age-icon">🧑</div>
-                    <h3>Старшая группа: 10-13 лет</h3>
-                </div>
-                <ul>
-                    <li>Сложные прототипы (Arduino, 3D-печать)</li>
-                    <li>Программирование (Python, веб)</li>
-                    <li>Анализ данных и статистика</li>
-                    <li>Инженерные расчёты</li>
-                    <li>Бизнес-планирование и бюджеты</li>
-                    <li>Английский: проектная документация</li>
-                    <li>Направление: профориентация</li>
-                </ul>
+                <div class="age-header"><div class="age-icon">🧑</div><h3>Старшая группа: 10-13 лет</h3></div>
+                <ul><li>Сложные прототипы (Arduino, 3D-печать)</li><li>Программирование (Python, веб)</li><li>Анализ данных и статистика</li><li>Инженерные расчёты</li><li>Бизнес-планирование и бюджеты</li><li>Английский: проектная документация</li></ul>
             </div>
         </div>
-        
         <div class="slide-number">09 / 19</div>
     </section>
 
@@ -1982,50 +1057,16 @@
     <section class="slide slide-dark content-slide">
         <h2>8 ролей в каждом департаменте</h2>
         <p class="slide-desc">Ротация каждые 2-3 дня — за смену ребёнок попробует 5-7 ролей</p>
-        
         <div class="grid-4">
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🎤</div>
-                <h3>Шерпа дня</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Переговоры, представление команды</p>
-            </div>
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🗣️</div>
-                <h3>Спикер</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Выступления, защита решений</p>
-            </div>
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">📋</div>
-                <h3>Координатор</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Сроки, задачи, контроль</p>
-            </div>
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🔧</div>
-                <h3>Мастер-сборщик</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Прототипы, чертежи, макеты</p>
-            </div>
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">📊</div>
-                <h3>Аналитик</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Данные, визуализация</p>
-            </div>
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🎨</div>
-                <h3>Дизайнер</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Визуал, вёрстка, UI/UX</p>
-            </div>
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">📝</div>
-                <h3>Репортёр</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Контент, видео, новости</p>
-            </div>
-            <div class="role-card">
-                <div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🌿</div>
-                <h3>Эко-эксперт</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Экологическая экспертиза</p>
-            </div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🎤</div><h3>Шерпа дня</h3><p style="font-size: 0.85rem; color: var(--gray);">Переговоры, представление команды</p></div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🗣️</div><h3>Спикер</h3><p style="font-size: 0.85rem; color: var(--gray);">Выступления, защита решений</p></div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">📋</div><h3>Координатор</h3><p style="font-size: 0.85rem; color: var(--gray);">Сроки, задачи, контроль</p></div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🔧</div><h3>Мастер-сборщик</h3><p style="font-size: 0.85rem; color: var(--gray);">Прототипы, чертежи, макеты</p></div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">📊</div><h3>Аналитик</h3><p style="font-size: 0.85rem; color: var(--gray);">Данные, визуализация</p></div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🎨</div><h3>Дизайнер</h3><p style="font-size: 0.85rem; color: var(--gray);">Визуал, вёрстка, UI/UX</p></div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">📝</div><h3>Репортёр</h3><p style="font-size: 0.85rem; color: var(--gray);">Контент, видео, новости</p></div>
+            <div class="role-card"><div class="card-icon" style="margin: 0 auto 15px; width: 50px; height: 50px; font-size: 24px;">🌿</div><h3>Эко-эксперт</h3><p style="font-size: 0.85rem; color: var(--gray);">Экологическая экспертиза</p></div>
         </div>
-        
         <div class="slide-number">10 / 19</div>
     </section>
 
@@ -2033,107 +1074,16 @@
     <section class="slide slide-accent content-slide">
         <h2>💪 Hard Skills</h2>
         <p class="slide-desc">Технические навыки, которые развивает каждый участник</p>
-        
         <div class="grid-4" style="margin-bottom: 40px;">
-            <div class="skill-card" data-skill="engineering">
-                <div class="skill-icon">⚙️</div>
-                <h4>Инженерия</h4>
-                <div class="skill-progress">
-                    <div class="skill-bar-custom">
-                        <div class="skill-fill-custom" style="width: 0%;" data-width="85%"></div>
-                    </div>
-                    <span class="skill-percent">85%</span>
-                </div>
-                <ul class="skill-tags">
-                    <li>Прототипирование</li>
-                    <li>3D-моделирование</li>
-                    <li>Конструирование</li>
-                    <li>Черчение</li>
-                </ul>
-            </div>
-            
-            <div class="skill-card" data-skill="programming">
-                <div class="skill-icon">💻</div>
-                <h4>Программирование</h4>
-                <div class="skill-progress">
-                    <div class="skill-bar-custom">
-                        <div class="skill-fill-custom" style="width: 0%;" data-width="70%"></div>
-                    </div>
-                    <span class="skill-percent">70%</span>
-                </div>
-                <ul class="skill-tags">
-                    <li>Python</li>
-                    <li>Scratch</li>
-                    <li>Веб-разработка</li>
-                    <li>Алгоритмы</li>
-                </ul>
-            </div>
-            
-            <div class="skill-card" data-skill="data">
-                <div class="skill-icon">📊</div>
-                <h4>Аналитика</h4>
-                <div class="skill-progress">
-                    <div class="skill-bar-custom">
-                        <div class="skill-fill-custom" style="width: 0%;" data-width="75%"></div>
-                    </div>
-                    <span class="skill-percent">75%</span>
-                </div>
-                <ul class="skill-tags">
-                    <li>Статистика</li>
-                    <li>Визуализация</li>
-                    <li>Дашборды</li>
-                    <li>Работа с данными</li>
-                </ul>
-            </div>
-            
-            <div class="skill-card" data-skill="design">
-                <div class="skill-icon">🎨</div>
-                <h4>Дизайн</h4>
-                <div class="skill-progress">
-                    <div class="skill-bar-custom">
-                        <div class="skill-fill-custom" style="width: 0%;" data-width="80%"></div>
-                    </div>
-                    <span class="skill-percent">80%</span>
-                </div>
-                <ul class="skill-tags">
-                    <li>UI/UX</li>
-                    <li>Графика</li>
-                    <li>Презентации</li>
-                    <li>Брендинг</li>
-                </ul>
-            </div>
+            <div class="skill-card"><div class="skill-icon">⚙️</div><h4>Инженерия</h4><div class="skill-progress"><div class="skill-bar-custom"><div class="skill-fill-custom" style="width: 85%;"></div></div><span class="skill-percent">85%</span><ul class="skill-tags"><li>Прототипирование</li><li>3D-моделирование</li><li>Конструирование</li><li>Черчение</li></ul></div>
+            <div class="skill-card"><div class="skill-icon">💻</div><h4>Программирование</h4><div class="skill-progress"><div class="skill-bar-custom"><div class="skill-fill-custom" style="width: 70%;"></div></div><span class="skill-percent">70%</span><ul class="skill-tags"><li>Python</li><li>Scratch</li><li>Веб-разработка</li><li>Алгоритмы</li></ul></div>
+            <div class="skill-card"><div class="skill-icon">📊</div><h4>Аналитика</h4><div class="skill-progress"><div class="skill-bar-custom"><div class="skill-fill-custom" style="width: 75%;"></div></div><span class="skill-percent">75%</span><ul class="skill-tags"><li>Статистика</li><li>Визуализация</li><li>Дашборды</li><li>Работа с данными</li></ul></div>
+            <div class="skill-card"><div class="skill-icon">🎨</div><h4>Дизайн</h4><div class="skill-progress"><div class="skill-bar-custom"><div class="skill-fill-custom" style="width: 80%;"></div></div><span class="skill-percent">80%</span><ul class="skill-tags"><li>UI/UX</li><li>Графика</li><li>Презентации</li><li>Брендинг</li></ul></div>
         </div>
-        
         <div class="grid-2">
-            <div class="card interactive-card" onclick="this.classList.toggle('expanded')">
-                <h3>🔬 Научные навыки</h3>
-                <div class="card-content">
-                    <ul>
-                        <li>Экспериментирование и тестирование</li>
-                        <li>Научный метод исследования</li>
-                        <li>Работа с гипотезами</li>
-                        <li>Лабораторная работа</li>
-                        <li>Экологический анализ</li>
-                    </ul>
-                </div>
-                <div class="expand-hint">Нажмите для подробностей</div>
-            </div>
-            
-            <div class="card interactive-card" onclick="this.classList.toggle('expanded')">
-                <h3>🏗️ Технические навыки</h3>
-                <div class="card-content">
-                    <ul>
-                        <li>Работа с инструментами</li>
-                        <li>Сборка механизмов</li>
-                        <li>Arduino и электроника</li>
-                        <li>Лазерная резка и фрезеровка</li>
-                        <li>Макетирование</li>
-                    </ul>
-                </div>
-                <div class="expand-hint">Нажмите для подробностей</div>
-            </div>
+            <div class="card interactive-card" onclick="this.classList.toggle('expanded')"><h3>🔬 Научные навыки</h3><div class="card-content"><ul><li>Экспериментирование и тестирование</li><li>Научный метод исследования</li><li>Работа с гипотезами</li><li>Лабораторная работа</li><li>Экологический анализ</li></ul></div><div class="expand-hint">Нажмите для подробностей</div></div>
+            <div class="card interactive-card" onclick="this.classList.toggle('expanded')"><h3>🏗️ Технические навыки</h3><div class="card-content"><ul><li>Работа с инструментами</li><li>Сборка механизмов</li><li>Arduino и электроника</li><li>Лазерная резка и фрезеровка</li><li>Макетирование</li></ul></div><div class="expand-hint">Нажмите для подробностей</div></div>
         </div>
-        
         <div class="slide-number">11 / 19</div>
     </section>
 
@@ -2141,96 +1091,25 @@
     <section class="slide slide-dark content-slide">
         <h2>🤝 Soft Skills</h2>
         <p class="slide-desc">Гибкие навыки для успеха в современном мире</p>
-        
         <div class="skills-wheel">
-            <div class="wheel-center">
-                <div class="center-icon">🌟</div>
-                <div class="center-text">Навыки XXI века</div>
-            </div>
-            
-            <div class="wheel-item" style="--angle: 0deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">🗣️</span>
-                    <span class="wheel-label">Коммуникация</span>
-                </div>
-            </div>
-            <div class="wheel-item" style="--angle: 45deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">🧠</span>
-                    <span class="wheel-label">Критическое мышление</span>
-                </div>
-            </div>
-            <div class="wheel-item" style="--angle: 90deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">💡</span>
-                    <span class="wheel-label">Креативность</span>
-                </div>
-            </div>
-            <div class="wheel-item" style="--angle: 135deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">🤝</span>
-                    <span class="wheel-label">Командная работа</span>
-                </div>
-            </div>
-            <div class="wheel-item" style="--angle: 180deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">⏰</span>
-                    <span class="wheel-label">Тайм-менеджмент</span>
-                </div>
-            </div>
-            <div class="wheel-item" style="--angle: 225deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">💪</span>
-                    <span class="wheel-label">Адаптивность</span>
-                </div>
-            </div>
-            <div class="wheel-item" style="--angle: 270deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">🎯</span>
-                    <span class="wheel-label">Постановка целей</span>
-                </div>
-            </div>
-            <div class="wheel-item" style="--angle: 315deg;">
-                <div class="wheel-segment">
-                    <span class="wheel-icon">📣</span>
-                    <span class="wheel-label">Публичные выступления</span>
-                </div>
-            </div>
+            <div class="wheel-center"><div class="center-icon">🌟</div><div class="center-text">Навыки XXI века</div></div>
+            <div class="wheel-item" style="--angle: 0deg;"><div class="wheel-segment"><span class="wheel-icon">🗣️</span><span class="wheel-label">Коммуникация</span></div></div>
+            <div class="wheel-item" style="--angle: 45deg;"><div class="wheel-segment"><span class="wheel-icon">🧠</span><span class="wheel-label">Критическое мышление</span></div></div>
+            <div class="wheel-item" style="--angle: 90deg;"><div class="wheel-segment"><span class="wheel-icon">💡</span><span class="wheel-label">Креативность</span></div></div>
+            <div class="wheel-item" style="--angle: 135deg;"><div class="wheel-segment"><span class="wheel-icon">🤝</span><span class="wheel-label">Командная работа</span></div></div>
+            <div class="wheel-item" style="--angle: 180deg;"><div class="wheel-segment"><span class="wheel-icon">⏰</span><span class="wheel-label">Тайм-менеджмент</span></div></div>
+            <div class="wheel-item" style="--angle: 225deg;"><div class="wheel-segment"><span class="wheel-icon">💪</span><span class="wheel-label">Адаптивность</span></div></div>
+            <div class="wheel-item" style="--angle: 270deg;"><div class="wheel-segment"><span class="wheel-icon">🎯</span><span class="wheel-label">Постановка целей</span></div></div>
+            <div class="wheel-item" style="--angle: 315deg;"><div class="wheel-segment"><span class="wheel-icon">📣</span><span class="wheel-label">Публичные выступления</span></div></div>
         </div>
-        
         <div class="grid-3" style="margin-top: 50px;">
-            <div class="mini-card">
-                <div class="mini-icon">🎤</div>
-                <h4>Ораторское мастерство</h4>
-                <p>Выступления перед аудиторией, защита проектов, питчи</p>
-            </div>
-            <div class="mini-card">
-                <div class="mini-icon">🤝</div>
-                <h4>Переговоры</h4>
-                <p>Достижение договорённостей, контракты, торги</p>
-            </div>
-            <div class="mini-card">
-                <div class="mini-icon">👂</div>
-                <h4>Активное слушание</h4>
-                <p>Понимание других, эмпатия, обратная связь</p>
-            </div>
-            <div class="mini-card">
-                <div class="mini-icon">🔧</div>
-                <h4>Решение проблем</h4>
-                <p>Анализ ситуации, поиск решений, действие</p>
-            </div>
-            <div class="mini-card">
-                <div class="mini-icon">📝</div>
-                <h4>Документирование</h4>
-                <p>Ведение заметок, отчёты, презентации</p>
-            </div>
-            <div class="mini-card">
-                <div class="mini-icon">🧘</div>
-                <h4>Эмоциональный интеллект</h4>
-                <p>Саморегуляция, стрессоустойчивость, рефлексия</p>
-            </div>
+            <div class="mini-card"><div class="mini-icon">🎤</div><h4>Ораторское мастерство</h4><p>Выступления перед аудиторией, защита проектов, питчи</p></div>
+            <div class="mini-card"><div class="mini-icon">🤝</div><h4>Переговоры</h4><p>Достижение договорённостей, контракты, торги</p></div>
+            <div class="mini-card"><div class="mini-icon">👂</div><h4>Активное слушание</h4><p>Понимание других, эмпатия, обратная связь</p></div>
+            <div class="mini-card"><div class="mini-icon">🔧</div><h4>Решение проблем</h4><p>Анализ ситуации, поиск решений, действие</p></div>
+            <div class="mini-card"><div class="mini-icon">📝</div><h4>Документирование</h4><p>Ведение заметок, отчёты, презентации</p></div>
+            <div class="mini-card"><div class="mini-icon">🧘</div><h4>Эмоциональный интеллект</h4><p>Саморегуляция, стрессоустойчивость, рефлексия</p></div>
         </div>
-        
         <div class="slide-number">12 / 19</div>
     </section>
 
@@ -2238,72 +1117,11 @@
     <section class="slide slide-accent content-slide">
         <h2>📊 Карта Талантов</h2>
         <p class="slide-desc">Персональный анализ навыков по итогам смены</p>
-        
         <div class="dashboard">
-            <div class="dashboard-card hard">
-                <h4>💪 Hard Skills</h4>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Техническое мышление</span><span>85%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 85%;"></div></div>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Программирование</span><span>70%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 70%;"></div></div>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Проектирование</span><span>80%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 80%;"></div></div>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Работа с данными</span><span>65%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 65%;"></div></div>
-                </div>
-            </div>
-            
-            <div class="dashboard-card soft">
-                <h4>🤝 Soft Skills</h4>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Командная работа</span><span>90%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 90%;"></div></div>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Публичные выступления</span><span>75%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 75%;"></div></div>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Переговоры</span><span>80%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 80%;"></div></div>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-label"><span>Креативность</span><span>85%</span></div>
-                    <div class="skill-track"><div class="skill-fill" style="width: 85%;"></div></div>
-                </div>
-            </div>
-            
-            <div class="dashboard-card growth">
-                <h4>🎯 Зоны роста</h4>
-                <ul class="skill-list">
-                    <li>Тайм-менеджмент</li>
-                    <li>Работа с ошибками</li>
-                    <li>Принятие решений</li>
-                    <li>Эмоциональный интеллект</li>
-                    <li>Адаптивность</li>
-                </ul>
-            </div>
-            
-            <div class="dashboard-card career">
-                <h4>💼 Профориентация</h4>
-                <ul class="skill-list">
-                    <li>Инженерные направления</li>
-                    <li>IT и разработка</li>
-                    <li>Науки о данных</li>
-                    <li>Экология и устойчивость</li>
-                    <li>Медиа и коммуникации</li>
-                    <li>Управление и бизнес</li>
-                </ul>
-            </div>
+            <div class="dashboard-card hard"><h4>💪 Hard Skills</h4><div class="skill-bar"><div class="skill-label"><span>Техническое мышление</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" style="width: 85%;"></div></div></div><div class="skill-bar"><div class="skill-label"><span>Программирование</span><span>70%</span></div><div class="skill-track"><div class="skill-fill" style="width: 70%;"></div></div></div><div class="skill-bar"><div class="skill-label"><span>Проектирование</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" style="width: 80%;"></div></div></div><div class="skill-bar"><div class="skill-label"><span>Работа с данными</span><span>65%</span></div><div class="skill-track"><div class="skill-fill" style="width: 65%;"></div></div></div></div>
+            <div class="dashboard-card soft"><h4>🤝 Soft Skills</h4><div class="skill-bar"><div class="skill-label"><span>Командная работа</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" style="width: 90%;"></div></div></div><div class="skill-bar"><div class="skill-label"><span>Публичные выступления</span><span>75%</span></div><div class="skill-track"><div class="skill-fill" style="width: 75%;"></div></div></div><div class="skill-bar"><div class="skill-label"><span>Переговоры</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" style="width: 80%;"></div></div></div><div class="skill-bar"><div class="skill-label"><span>Креативность</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" style="width: 85%;"></div></div></div></div>
+            <div class="dashboard-card growth"><h4>🎯 Зоны роста</h4><ul class="skill-list"><li>Тайм-менеджмент</li><li>Работа с ошибками</li><li>Принятие решений</li><li>Эмоциональный интеллект</li><li>Адаптивность</li></ul></div>
         </div>
-        
         <div class="slide-number">13 / 19</div>
     </section>
 
@@ -2311,82 +1129,14 @@
     <section class="slide slide-dark content-slide">
         <h2>Профориентационные выводы</h2>
         <p class="slide-desc">Рекомендации по развитию на основе ролей и проектов</p>
-        
         <div class="grid-3">
-            <div class="card">
-                <div class="card-icon">⚙️</div>
-                <h3>Инженерный</h3>
-                <p>Рекомендуется:</p>
-                <ul>
-                    <li>Робототехника</li>
-                    <li>Конструирование</li>
-                    <li>Физика, математика</li>
-                </ul>
-                <p style="margin-top: 10px; color: var(--accent);">Кружки:</p>
-                <p style="font-size: 0.9rem;">LEGO, Arduino, 3D-моделирование, черчение</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">💻</div>
-                <h3>IT-профиль</h3>
-                <p>Рекомендуется:</p>
-                <ul>
-                    <li>Программирование</li>
-                    <li>Веб-разработка</li>
-                    <li>Анализ данных</li>
-                </ul>
-                <p style="margin-top: 10px; color: var(--accent);">Кружки:</p>
-                <p style="font-size: 0.9rem;">Python, Scratch, ScratchJr, Unity</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🌱</div>
-                <h3>Экологический</h3>
-                <p>Рекомендуется:</p>
-                <ul>
-                    <li>Естественные науки</li>
-                    <li>География, биология</li>
-                    <li>Исследования</li>
-                </ul>
-                <p style="margin-top: 10px; color: var(--accent);">Кружки:</p>
-                <p style="font-size: 0.9rem;">Юный эколог, исследователь, химия</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📰</div>
-                <h3>Медиа</h3>
-                <p>Рекомендуется:</p>
-                <ul>
-                    <li>Журналистика</li>
-                    <li>Дизайн</li>
-                    <li>Маркетинг</li>
-                </ul>
-                <p style="margin-top: 10px; color: var(--accent);">Кружки:</p>
-                <p style="font-size: 0.9rem;">Медиастудия, видеосъёмка, SMM</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🎤</div>
-                <h3>Управленческий</h3>
-                <p>Рекомендуется:</p>
-                <ul>
-                    <li>Менеджмент</li>
-                    <li>Экономика</li>
-                    <li>Политология</li>
-                </ul>
-                <p style="margin-top: 10px; color: var(--accent);">Кружки:</p>
-                <p style="font-size: 0.9rem;">Дебаты, ораторское мастерство</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🏛️</div>
-                <h3>Архитектурный</h3>
-                <p>Рекомендуется:</p>
-                <ul>
-                    <li>Архитектура</li>
-                    <li>Дизайн</li>
-                    <li>Урбанистика</li>
-                </ul>
-                <p style="margin-top: 10px; color: var(--accent);">Кружки:</p>
-                <p style="font-size: 0.9rem;">Рисование, черчение, макетирование</p>
-            </div>
+            <div class="card"><div class="card-icon">⚙️</div><h3>Инженерный</h3><p>Рекомендуется:</p><ul><li>Робототехника</li><li>Конструирование</li><li>Физика, математика</li></ul><p style="margin-top: 10px; color: var(--accent);">Кружки:</p><p style="font-size: 0.9rem;">LEGO, Arduino, 3D-моделирование</p></div>
+            <div class="card"><div class="card-icon">💻</div><h3>IT-профиль</h3><p>Рекомендуется:</p><ul><li>Программирование</li><li>Веб-разработка</li><li>Анализ данных</li></ul><p style="margin-top: 10px; color: var(--accent);">Кружки:</p><p style="font-size: 0.9rem;">Python, Scratch, Unity</p></div>
+            <div class="card"><div class="card-icon">🌱</div><h3>Экологический</h3><p>Рекомендуется:</p><ul><li>Естественные науки</li><li>География, биология</li><li>Исследования</li></ul><p style="margin-top: 10px; color: var(--accent);">Кружки:</p><p style="font-size: 0.9rem;">Юный эколог, химия</p></div>
+            <div class="card"><div class="card-icon">📰</div><h3>Медиа</h3><p>Рекомендуется:</p><ul><li>Журналистика</li><li>Дизайн</li><li>Маркетинг</li></ul><p style="margin-top: 10px; color: var(--accent);">Кружки:</p><p style="font-size: 0.9rem;">Медиастудия, видеосъёмка</p></div>
+            <div class="card"><div class="card-icon">🎤</div><h3>Управленческий</h3><p>Рекомендуется:</p><ul><li>Менеджмент</li><li>Экономика</li><li>Политология</li></ul><p style="margin-top: 10px; color: var(--accent);">Кружки:</p><p style="font-size: 0.9rem;">Дебаты, ораторское</p></div>
+            <div class="card"><div class="card-icon">🏛️</div><h3>Архитектурный</h3><p>Рекомендуется:</p><ul><li>Архитектура</li><li>Дизайн</li><li>Урбанистика</li></ul><p style="margin-top: 10px; color: var(--accent);">Кружки:</p><p style="font-size: 0.9rem;">Рисование, макетирование</p></div>
         </div>
-        
         <div class="slide-number">14 / 19</div>
     </section>
 
@@ -2394,52 +1144,11 @@
     <section class="slide slide-gradient content-slide">
         <h2>Английский язык</h2>
         <p class="slide-desc">Полное погружение в каждой смене</p>
-        
         <div class="grid-2">
-            <div class="card">
-                <h3>👨‍🏫 Носители языка</h3>
-                <ul>
-                    <li>Несколько носителей на каждую смену</li>
-                    <li>Ежедневное общение на английском</li>
-                    <li>Проекты на английском языке</li>
-                    <li>Отчёт, презентация, защита</li>
-                    <li>Языковая среда 24/7</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>📚 Педагоги</h3>
-                <ul>
-                    <li>Англоговорящие педагоги в каждом отряде</li>
-                    <li>Игровые методики изучения языка</li>
-                    <li>Тематическая лексика по проектам</li>
-                    <li>Подготовка к международным экзаменам</li>
-                    <li>Разговорные клубы</li>
-                </ul>
-            </div>
+            <div class="card"><h3>👨‍🏫 Носители языка</h3><ul><li>Несколько носителей на каждую смену</li><li>Ежедневное общение на английском</li><li>Проекты на английском языке</li><li>Отчёт, презентация, защита</li><li>Языковая среда 24/7</li></ul></div>
+            <div class="card"><h3>📚 Педагоги</h3><ul><li>Англоговорящие педагоги в каждом отряде</li><li>Игровые методики изучения языка</li><li>Тематическая лексика по проектам</li><li>Подготовка к международным экзаменам</li><li>Разговорные клубы</li></ul></div>
         </div>
-        
-        <div class="card" style="margin-top: 30px;">
-            <h3>🎯 Уровни и формат</h3>
-            <div class="grid-4" style="margin-top: 20px;">
-                <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">Beginner</div>
-                    <p style="font-size: 0.85rem; color: var(--gray);">7-8 лет</p>
-                </div>
-                <div style="text-align: center; padding: 20px; background: rgba(0,196,140,0.1); border-radius: 15px; border: 1px solid var(--accent);">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">Elementary</div>
-                    <p style="font-size: 0.85rem; color: var(--gray);">8-9 лет</p>
-                </div>
-                <div style="text-align: center; padding: 20px; background: rgba(255,184,0,0.1); border-radius: 15px; border: 1px solid var(--accent-alt);">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-alt);">Intermediate</div>
-                    <p style="font-size: 0.85rem; color: var(--gray);">10-11 лет</p>
-                </div>
-                <div style="text-align: center; padding: 20px; background: rgba(168,85,247,0.1); border-radius: 15px; border: 1px solid var(--accent-purple);">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-purple);">Upper-Int.</div>
-                    <p style="font-size: 0.85rem; color: var(--gray);">12-13 лет</p>
-                </div>
-            </div>
-        </div>
-        
+        <div class="card" style="margin-top: 30px;"><h3>🎯 Уровни и формат</h3><div class="grid-4" style="margin-top: 20px;"><div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px;"><div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">Beginner</div><p style="font-size: 0.85rem; color: var(--gray);">7-8 лет</p></div><div style="text-align: center; padding: 20px; background: rgba(0,196,140,0.1); border-radius: 15px; border: 1px solid var(--accent);"><div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">Elementary</div><p style="font-size: 0.85rem; color: var(--gray);">8-9 лет</p></div><div style="text-align: center; padding: 20px; background: rgba(255,184,0,0.1); border-radius: 15px; border: 1px solid var(--accent-alt);"><div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-alt);">Intermediate</div><p style="font-size: 0.85rem; color: var(--gray);">10-11 лет</p></div><div style="text-align: center; padding: 20px; background: rgba(168,85,247,0.1); border-radius: 15px; border: 1px solid var(--accent-purple);"><div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-purple);">Upper-Int.</div><p style="font-size: 0.85rem; color: var(--gray);">12-13 лет</p></div></div></div>
         <div class="slide-number">15 / 19</div>
     </section>
 
@@ -2447,111 +1156,55 @@
     <section class="slide slide-dark content-slide">
         <h2>Финал смены</h2>
         <p class="slide-desc">Мини-конференция и защита проектов</p>
-        
         <div class="final-grid">
-            <div class="final-card">
-                <div class="final-icon">🏆</div>
-                <h4>Презентация проекта</h4>
-                <p>Публичная защита перед родителями и экспертами. 5-7 минут на команду.</p>
-            </div>
-            <div class="final-card">
-                <div class="final-icon">📋</div>
-                <h4>Стенд проекта</h4>
-                <p>Научный стенд с макетами, схемами, прототипами и результатами.</p>
-            </div>
-            <div class="final-card">
-                <div class="final-icon">🎲</div>
-                <h4>3D-модели</h4>
-                <p>Демонстрация созданных моделей, прототипов и работающих решений.</p>
-            </div>
-            <div class="final-card">
-                <div class="final-icon">🎓</div>
-                <h4>Сертификат</h4>
-                <p>Официальный документ о прохождении курса и освоенных навыках.</p>
-            </div>
+            <div class="final-card"><div class="final-icon">🏆</div><h4>Презентация проекта</h4><p>Публичная защита перед родителями и экспертами. 5-7 минут на команду.</p></div>
+            <div class="final-card"><div class="final-icon">📋</div><h4>Стенд проекта</h4><p>Научный стенд с макетами, схемами, прототипами и результатами.</p></div>
+            <div class="final-card"><div class="final-icon">🎲</div><h4>3D-модели</h4><p>Демонстрация созданных моделей, прототипов и работающих решений.</p></div>
+            <div class="final-card"><div class="final-icon">🎓</div><h4>Сертификат</h4><p>Официальный документ о прохождении курса и освоенных навыках.</p></div>
         </div>
-        
-        <div class="card" style="margin-top: 40px;">
-            <h3>📋 Шаблон стенда</h3>
-            <div class="grid-2" style="margin-top: 20px;">
-                <div>
-                    <p><strong>Структура:</strong></p>
-                    <ul style="margin-top: 10px;">
-                        <li>Название проекта и департамент</li>
-                        <li>Проблема, которую решали</li>
-                        <li>Гипотеза и методы</li>
-                        <li>Процесс работы (фото)</li>
-                    </ul>
-                </div>
-                <div>
-                    <p><strong>Формат:</strong></p>
-                    <ul style="margin-top: 10px;">
-                        <li>Наглядные материалы (плакат, баннер)</li>
-                        <li>Демонстрация прототипа</li>
-                        <li>Видео или презентация</li>
-                        <li>Интерактивная часть</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
+        <div class="card" style="margin-top: 40px;"><h3>📋 Шаблон стенда</h3><div class="grid-2" style="margin-top: 20px;"><div><p><strong>Структура:</strong></p><ul style="margin-top: 10px;"><li>Название проекта и департамент</li><li>Проблема, которую решали</li><li>Гипотеза и методы</li><li>Процесс работы (фото)</li></ul></div><div><p><strong>Формат:</strong></p><ul style="margin-top: 10px;"><li>Наглядные материалы (плакат, баннер)</li><li>Демонстрация прототипа</li><li>Видео или презентация</li><li>Интерактивная часть</li></ul></div></div></div>
         <div class="slide-number">16 / 19</div>
     </section>
 
-    <!-- Slide 17: Сертификат -->
-    <section class="slide slide-accent content-slide">
-        <h2>Сертификат о прохождении</h2>
-        
-        <div class="certificate-preview">
-            <h3>СЕРТИФИКАТ</h3>
-            <p class="cert-title">об окончании программы</p>
-            <p class="cert-name">ИнноСити</p>
-            <p style="font-size: 1.2rem; color: rgba(255,255,255,0.8);">Настоящий сертификат подтверждает, что</p>
-            <p style="font-size: 1.8rem; font-weight: 700; margin: 20px 0;">[Имя участника]</p>
-            <p style="color: rgba(255,255,255,0.7);">успешно прошёл(ла) 14-дневную программу</p>
-            <p style="font-size: 1.3rem; margin-bottom: 30px;">«Лаборатория Будущего»</p>
-            
-            <div class="cert-details">
-                <span>📅 [Дата смены]</span>
-                <span>🏆 [Номер смены]</span>
-                <span>📍 [Департамент]</span>
-            </div>
-        </div>
-        
-        <div class="slide-number">17 / 19</div>
-    </section>
-
-    <!-- Slide 18: Результаты -->
+    <!-- Slide 17: Результаты -->
     <section class="slide slide-dark content-slide">
         <h2>Что получает ребёнок</h2>
         <p class="slide-desc">Осязаемые результаты и персональные рекомендации</p>
-        
         <div class="grid-2">
-            <div class="card">
-                <h3>📁 Во время смены</h3>
-                <ul>
-                    <li>Личное дело Хранителя</li>
-                    <li>Ежедневные новости от Медиацентра</li>
-                    <li>Фото и видео с событий</li>
-                    <li>Возможность отправить письмо родителям</li>
-                    <li>Обратная связь от наставников</li>
-                    <li>ONE!Coins (внутриигровая валюта)</li>
-                </ul>
+            <div class="card"><h3>📁 Во время смены</h3><ul><li>Личное дело Хранителя</li><li>Ежедневные новости от Медиацентра</li><li>Фото и видео с событий</li><li>Возможность отправить письмо родителям</li><li>Обратная связь от наставников</li><li>ONE!Coins (внутриигровая валюта)</li></ul></div>
+            <div class="card"><h3>🎁 В конце смены</h3><ul><li>Портфолио со всеми артефактами</li><li>Прототипы и макеты</li><li>3D-модели (при наличии)</li><li>Карта талантов (дашборд)</li><li>Профориентационный отчёт</li><li>Сертификат</li><li>Видео-история смены</li></ul></div>
+        </div>
+        <div class="slide-number">17 / 19</div>
+    </section>
+
+    <!-- Slide 18: Интерактив -->
+    <section class="slide slide-dark content-slide">
+        <h2>🎮 Попробуй прямо сейчас!</h2>
+        <p class="slide-desc">Интерактивные форматы для детей и родителей</p>
+        <div class="grid-2" style="margin-top: 40px;">
+            <div class="card" style="text-align: center; cursor: pointer;" onclick="window.open('gloria-game.html', '_blank')">
+                <div style="font-size: 60px; margin-bottom: 20px;">🎮</div>
+                <h3>ИнноСити: Хранитель города</h3>
+                <p style="margin-top: 15px;">Браузерная игра-приключение. Управляй персонажем, выполняй миссии, выбирай департамент и спасай город!</p>
+                <div class="tags" style="justify-content: center; margin-top: 20px;">
+                    <span class="tag">WASD управление</span>
+                    <span class="tag">4 департамента</span>
+                    <span class="tag">Для детей 7-13</span>
+                </div>
+                <div style="margin-top: 25px; padding: 12px 30px; background: var(--gradient-1); border-radius: 25px; font-weight: 700; display: inline-block;">ИГРАТЬ →</div>
             </div>
-            <div class="card">
-                <h3>🎁 В конце смены</h3>
-                <ul>
-                    <li>Портфолио со всеми артефактами</li>
-                    <li>Прототипы и макеты</li>
-                    <li>3D-модели (при наличии)</li>
-                    <li>Карта талантов (дашборд)</li>
-                    <li>Профориентационный отчёт</li>
-                    <li>Сертификат</li>
-                    <li>Видео-история смены</li>
-                </ul>
+            <div class="card" style="text-align: center; cursor: pointer;" onclick="window.open('gloria-quiz.html', '_blank')">
+                <div style="font-size: 60px; margin-bottom: 20px;">📱</div>
+                <h3>Квест-опросник</h3>
+                <p style="margin-top: 15px;">Интерактивная история от Оракула. Отвечай на вопросы, узнай свою роль в городе и получи персональное предложение!</p>
+                <div class="tags" style="justify-content: center; margin-top: 20px;">
+                    <span class="tag">12+ сценариев</span>
+                    <span class="tag">4 направления</span>
+                    <span class="tag">Для родителей</span>
+                </div>
+                <div style="margin-top: 25px; padding: 12px 30px; background: var(--gradient-1); border-radius: 25px; font-weight: 700; display: inline-block;">НАЧАТЬ →</div>
             </div>
         </div>
-        
         <div class="slide-number">18 / 19</div>
     </section>
 
@@ -2559,53 +1212,20 @@
     <section class="slide slide-gradient title-slide">
         <h1 style="font-size: 3rem;">Спасибо за внимание!</h1>
         <p class="subtitle">ИнноСити — Лаборатория Будущего</p>
-        
         <div class="stats-row">
-            <div class="stat-box">
-                <div class="stat-number" style="font-size: 3rem;">5</div>
-                <div class="stat-label">смен</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number" style="font-size: 3rem;">14</div>
-                <div class="stat-label">дней</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number" style="font-size: 3rem;">4</div>
-                <div class="stat-label">департамента</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number" style="font-size: 3rem;">2</div>
-                <div class="stat-label">проекта</div>
-            </div>
+            <div class="stat-box"><div class="stat-number" style="font-size: 3rem;">5</div><div class="stat-label">смен</div></div>
+            <div class="stat-box"><div class="stat-number" style="font-size: 3rem;">14</div><div class="stat-label">дней</div></div>
+            <div class="stat-box"><div class="stat-number" style="font-size: 3rem;">4</div><div class="stat-label">департамента</div></div>
+            <div class="stat-box"><div class="stat-number" style="font-size: 3rem;">2</div><div class="stat-label">проекта</div></div>
         </div>
-        
-        <div class="badge" style="margin-top: 40px;">Презентация 2025</div>
+        <div class="badge" style="margin-top: 40px;">Презентация 2026</div>
         <div class="slide-number">19 / 19</div>
     </section>
 
     <script>
-        // Simple scroll navigation
         const slides = document.querySelectorAll('.slide');
         const navItems = document.querySelectorAll('.nav-item');
         
-        // Animate skill bars when slide comes into view
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const skillFills = entry.target.querySelectorAll('.skill-fill-custom');
-                    skillFills.forEach(fill => {
-                        const targetWidth = fill.getAttribute('data-width');
-                        setTimeout(() => {
-                            fill.style.width = targetWidth;
-                        }, 300);
-                    });
-                }
-            });
-        }, { threshold: 0.3 });
-        
-        slides.forEach(slide => skillObserver.observe(slide));
-        
-        // Navigation observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -2613,25 +1233,18 @@
                     navItems.forEach((item, i) => {
                         item.classList.toggle('active', i === index);
                     });
-                    
-                    // Animate elements on scroll
-                    entry.target.querySelectorAll('.animate-on-scroll').forEach(el => {
-                        el.classList.add('animate-count');
-                    });
                 }
             });
         }, { threshold: 0.5 });
         
         slides.forEach(slide => observer.observe(slide));
         
-        // Navigation click handlers
         navItems.forEach((item, index) => {
             item.addEventListener('click', () => {
                 slides[index].scrollIntoView({ behavior: 'smooth' });
             });
         });
         
-        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             const activeIndex = Array.from(navItems).findIndex(item => item.classList.contains('active'));
             if (e.key === 'ArrowDown' || e.key === 'PageDown') {
@@ -2646,6 +1259,31 @@
                 }
             }
         });
+
+        // Timer countdown - start date March 2, 2026
+        const startDate = new Date('2026-03-02T00:00:00');
+        
+        function updateTimer() {
+            const now = new Date();
+            const diff = startDate - now;
+            
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('timer-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('timer-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('timer-minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('timer-seconds').textContent = String(seconds).padStart(2, '0');
+            } else {
+                document.querySelector('.timer-display').innerHTML = '<div class="timer-block" style="width:100%;"><span style="font-size:1.5rem;background:none;-webkit-text-fill-color:#00C48C;">Лагерь уже идёт!</span></div>';
+            }
+        }
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
     </script>
 </body>
 </html>
