@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -369,34 +370,34 @@
             align-items: center;
             background: linear-gradient(145deg, rgba(0, 196, 140, 0.15), rgba(11, 26, 51, 0.8));
             border: 1px solid rgba(0, 196, 140, 0.3);
-            border-radius: 12px;
-            padding: 12px 18px;
-            min-width: 80px;
+            border-radius: 10px;
+            padding: 8px 12px;
+            min-width: 60px;
             box-shadow: 0 8px 32px rgba(0, 196, 140, 0.2);
         }
         
         .timer-block span:first-child {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 800;
             background: linear-gradient(135deg, #00C48C, #FFB800);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
-            text-shadow: 0 0 30px rgba(0, 196, 140, 0.5);
+            text-shadow: 0 0 20px rgba(0, 196, 140, 0.5);
         }
         
         .timer-unit {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: rgba(255,255,255,0.5);
-            margin-top: 5px;
+            margin-top: 3px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         
         .timer-sep {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: rgba(0, 196, 140, 0.6);
             animation: blink 1s infinite;
@@ -627,6 +628,103 @@
         }
 
         .dashboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        .skills-path {
+            position: relative;
+            padding: 20px 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .path-line {
+            position: absolute;
+            left: 40px;
+            top: 60px;
+            bottom: 60px;
+            width: 4px;
+            background: linear-gradient(180deg, #00C48C, #FFB800, #A855F7, #2DD4BF, #F472B6, #60A5FA, #34D399, #FBBF24);
+            border-radius: 2px;
+            z-index: 0;
+        }
+        
+        .skill-node {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+            animation-delay: calc(var(--delay) * 0.15s);
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .node-icon {
+            width: 80px;
+            height: 80px;
+            min-width: 80px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            border: 3px solid var(--color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 20px color-mix(in srgb, var(--color) 30%, transparent);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-node:hover .node-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px color-mix(in srgb, var(--color) 50%, transparent);
+        }
+        
+        .node-content {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-node:hover .node-content {
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            border-color: var(--color);
+            transform: translateX(5px);
+        }
+        
+        .node-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .node-content p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 12px;
+        }
+        
+        .node-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .node-tags span {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            background: color-mix(in srgb, var(--color) 20%, transparent);
+            border: 1px solid color-mix(in srgb, var(--color) 40%, transparent);
+            border-radius: 20px;
+            color: rgba(255,255,255,0.8);
+        }
+        
         .dashboard-card {
             background: rgba(255,255,255,0.03);
             border-radius: 20px;
@@ -892,15 +990,19 @@
             <div class="stat-box"><div class="stat-number">2</div><div class="stat-label">проекта/отряд</div></div>
         </div>
         <div class="timer-container">
-            <div class="timer-label">До старта:</div>
+            <div class="timer-label">До старта 1-й смены:</div>
             <div class="timer-display">
+                <div class="timer-block"><span id="timer-months">00</span><span class="timer-unit">мес</span></div>
+                <div class="timer-sep">:</div>
+                <div class="timer-block"><span id="timer-weeks">00</span><span class="timer-unit">нед</span></div>
+                <div class="timer-sep">:</div>
                 <div class="timer-block"><span id="timer-days">00</span><span class="timer-unit">дней</span></div>
                 <div class="timer-sep">:</div>
                 <div class="timer-block"><span id="timer-hours">00</span><span class="timer-unit">часов</span></div>
                 <div class="timer-sep">:</div>
-                <div class="timer-block"><span id="timer-minutes">00</span><span class="timer-unit">минут</span></div>
+                <div class="timer-block"><span id="timer-minutes">00</span><span class="timer-unit">мин</span></div>
                 <div class="timer-sep">:</div>
-                <div class="timer-block"><span id="timer-seconds">00</span><span class="timer-unit">секунд</span></div>
+                <div class="timer-block"><span id="timer-seconds">00</span><span class="timer-unit">сек</span></div>
             </div>
         </div>
         <div class="slide-number">01 / 19</div>
@@ -1089,27 +1191,85 @@
 
     <!-- Slide 12: Soft Skills -->
     <section class="slide slide-dark content-slide">
-        <h2>🤝 Soft Skills</h2>
-        <p class="slide-desc">Гибкие навыки для успеха в современном мире</p>
-        <div class="skills-wheel">
-            <div class="wheel-center"><div class="center-icon">🌟</div><div class="center-text">Навыки XXI века</div></div>
-            <div class="wheel-item" style="--angle: 0deg;"><div class="wheel-segment"><span class="wheel-icon">🗣️</span><span class="wheel-label">Коммуникация</span></div></div>
-            <div class="wheel-item" style="--angle: 45deg;"><div class="wheel-segment"><span class="wheel-icon">🧠</span><span class="wheel-label">Критическое мышление</span></div></div>
-            <div class="wheel-item" style="--angle: 90deg;"><div class="wheel-segment"><span class="wheel-icon">💡</span><span class="wheel-label">Креативность</span></div></div>
-            <div class="wheel-item" style="--angle: 135deg;"><div class="wheel-segment"><span class="wheel-icon">🤝</span><span class="wheel-label">Командная работа</span></div></div>
-            <div class="wheel-item" style="--angle: 180deg;"><div class="wheel-segment"><span class="wheel-icon">⏰</span><span class="wheel-label">Тайм-менеджмент</span></div></div>
-            <div class="wheel-item" style="--angle: 225deg;"><div class="wheel-segment"><span class="wheel-icon">💪</span><span class="wheel-label">Адаптивность</span></div></div>
-            <div class="wheel-item" style="--angle: 270deg;"><div class="wheel-segment"><span class="wheel-icon">🎯</span><span class="wheel-label">Постановка целей</span></div></div>
-            <div class="wheel-item" style="--angle: 315deg;"><div class="wheel-segment"><span class="wheel-icon">📣</span><span class="wheel-label">Публичные выступления</span></div></div>
+        <h2>🤝 Soft Skills — Навыки XXI века</h2>
+        <p class="slide-desc">Ключевые компетенции для успеха в современном мире</p>
+        
+        <div class="skills-path">
+            <div class="path-line"></div>
+            
+            <div class="skill-node" style="--delay: 0; --color: #00C48C;">
+                <div class="node-icon">🗣️</div>
+                <div class="node-content">
+                    <h4>Коммуникация</h4>
+                    <p>Умение ясно выражать мысли и слушать</p>
+                    <div class="node-tags"><span>Публичные выступления</span><span>Питчи</span><span>Презентации</span></div>
+                </div>
+            </div>
+            
+            <div class="skill-node" style="--delay: 1; --color: #FFB800;">
+                <div class="node-icon">🧠</div>
+                <div class="node-content">
+                    <h4>Критическое мышление</h4>
+                    <p>Анализ информации и принятие решений</p>
+                    <div class="node-tags"><span>Логика</span><span>Анализ</span><span>Оценка</span></div>
+                </div>
+            </div>
+            
+            <div class="skill-node" style="--delay: 2; --color: #A855F7;">
+                <div class="node-icon">💡</div>
+                <div class="node-content">
+                    <h4>Креативность</h4>
+                    <p>Генерация идей и нестандартные решения</p>
+                    <div class="node-tags"><span>Мозговой штурм</span><span>Дизайн-мышление</span><span>Инновации</span></div>
+                </div>
+            </div>
+            
+            <div class="skill-node" style="--delay: 3; --color: #2DD4BF;">
+                <div class="node-icon">🤝</div>
+                <div class="node-content">
+                    <h4>Командная работа</h4>
+                    <p>Эффективное сотрудничество в группе</p>
+                    <div class="node-tags"><span>Распределение ролей</span><span>Поддержка</span><span>Синергия</span></div>
+                </div>
+            </div>
+            
+            <div class="skill-node" style="--delay: 4; --color: #F472B6;">
+                <div class="node-icon">⏰</div>
+                <div class="node-content">
+                    <h4>Тайм-менеджмент</h4>
+                    <p>Планирование времени и приоритетов</p>
+                    <div class="node-tags"><span>Дедлайны</span><span>Планирование</span><span>Фокус</span></div>
+                </div>
+            </div>
+            
+            <div class="skill-node" style="--delay: 5; --color: #60A5FA;">
+                <div class="node-icon">💪</div>
+                <div class="node-content">
+                    <h4>Адаптивность</h4>
+                    <p>Гибкость в изменяющихся условиях</p>
+                    <div class="node-tags"><span>Стрессоустойчивость</span><span>Быстрая адаптация</span><span>Решение проблем</span></div>
+                </div>
+            </div>
+            
+            <div class="skill-node" style="--delay: 6; --color: #34D399;">
+                <div class="node-icon">🎯</div>
+                <div class="node-content">
+                    <h4>Постановка целей</h4>
+                    <p>Определение и достижение результатов</p>
+                    <div class="node-tags"><span>SMART-цели</span><span>Мотивация</span><span>Достижение</span></div>
+                </div>
+            </div>
+            
+            <div class="skill-node" style="--delay: 7; --color: #FBBF24;">
+                <div class="node-icon">📣</div>
+                <div class="node-content">
+                    <h4>Лидерство</h4>
+                    <p>Ведение команды к общей цели</p>
+                    <div class="node-tags"><span>Делегирование</span><span>Вдохновение</span><span>Ответственность</span></div>
+                </div>
+            </div>
         </div>
-        <div class="grid-3" style="margin-top: 50px;">
-            <div class="mini-card"><div class="mini-icon">🎤</div><h4>Ораторское мастерство</h4><p>Выступления перед аудиторией, защита проектов, питчи</p></div>
-            <div class="mini-card"><div class="mini-icon">🤝</div><h4>Переговоры</h4><p>Достижение договорённостей, контракты, торги</p></div>
-            <div class="mini-card"><div class="mini-icon">👂</div><h4>Активное слушание</h4><p>Понимание других, эмпатия, обратная связь</p></div>
-            <div class="mini-card"><div class="mini-icon">🔧</div><h4>Решение проблем</h4><p>Анализ ситуации, поиск решений, действие</p></div>
-            <div class="mini-card"><div class="mini-icon">📝</div><h4>Документирование</h4><p>Ведение заметок, отчёты, презентации</p></div>
-            <div class="mini-card"><div class="mini-icon">🧘</div><h4>Эмоциональный интеллект</h4><p>Саморегуляция, стрессоустойчивость, рефлексия</p></div>
-        </div>
+        
         <div class="slide-number">12 / 19</div>
     </section>
 
@@ -1260,19 +1420,24 @@
             }
         });
 
-        // Timer countdown - start date March 2, 2026
-        const startDate = new Date('2026-03-02T00:00:00');
+        // Timer countdown - start date June 7, 2026
+        const startDate = new Date('2026-06-07T00:00:00');
         
         function updateTimer() {
             const now = new Date();
             const diff = startDate - now;
             
             if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const months = Math.floor(totalDays / 30);
+                const weeks = Math.floor((totalDays % 30) / 7);
+                const days = totalDays % 30;
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
+                document.getElementById('timer-months').textContent = String(months).padStart(2, '0');
+                document.getElementById('timer-weeks').textContent = String(weeks).padStart(2, '0');
                 document.getElementById('timer-days').textContent = String(days).padStart(2, '0');
                 document.getElementById('timer-hours').textContent = String(hours).padStart(2, '0');
                 document.getElementById('timer-minutes').textContent = String(minutes).padStart(2, '0');
