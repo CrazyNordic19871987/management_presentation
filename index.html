@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -725,6 +724,279 @@
             color: rgba(255,255,255,0.8);
         }
         
+        .student-report {
+            background: linear-gradient(145deg, #0B1A33, #060d1a);
+            border: 2px solid rgba(0, 196, 140, 0.3);
+            border-radius: 24px;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 30px auto 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 196, 140, 0.1);
+        }
+        
+        .report-header {
+            background: linear-gradient(135deg, #00C48C, #008B6E);
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .report-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0B1A33;
+        }
+        
+        .report-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0B1A33;
+        }
+        
+        .report-date {
+            font-size: 0.9rem;
+            color: rgba(11, 26, 51, 0.7);
+        }
+        
+        .report-body {
+            padding: 35px 40px;
+        }
+        
+        .report-student {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(0, 196, 140, 0.2), rgba(255, 184, 0, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            border: 3px solid #00C48C;
+        }
+        
+        .student-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .student-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .meta-tag.age { background: rgba(0, 196, 140, 0.2); color: #00C48C; }
+        .meta-tag.group { background: rgba(255, 184, 0, 0.2); color: #FFB800; }
+        .meta-tag.shift { background: rgba(168, 85, 247, 0.2); color: #A855F7; }
+        
+        .report-section {
+            margin-bottom: 30px;
+        }
+        
+        .report-section h4 {
+            font-size: 1.1rem;
+            color: #00C48C;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .project-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .project-item:hover {
+            border-color: rgba(0, 196, 140, 0.4);
+            background: rgba(0, 196, 140, 0.05);
+        }
+        
+        .project-icon {
+            font-size: 32px;
+            width: 55px;
+            height: 55px;
+            background: rgba(0, 196, 140, 0.15);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .project-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .project-details strong {
+            font-size: 1.05rem;
+            color: #fff;
+        }
+        
+        .project-details span {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .project-type {
+            display: inline-block;
+            font-size: 0.75rem !important;
+            padding: 3px 10px;
+            background: rgba(168, 85, 247, 0.2);
+            color: #A855F7 !important;
+            border-radius: 12px;
+            width: fit-content;
+            margin-top: 5px;
+        }
+        
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .report-section.half {
+            margin-bottom: 0;
+        }
+        
+        .talent-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .talent-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .talent-bar span {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            min-width: 140px;
+        }
+        
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00C48C, #FFB800);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 196, 140, 0.5);
+        }
+        
+        .roles-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .role-tag {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, rgba(255, 184, 0, 0.15), rgba(255, 184, 0, 0.05));
+            border: 1px solid rgba(255, 184, 0, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #FFB800;
+        }
+        
+        .career-recommendation {
+            display: flex;
+            gap: 20px;
+            background: linear-gradient(135deg, rgba(0, 196, 140, 0.1), rgba(255, 184, 0, 0.05));
+            border: 1px solid rgba(0, 196, 140, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+        }
+        
+        .career-icon {
+            font-size: 36px;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 196, 140, 0.2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+        }
+        
+        .career-content strong {
+            display: block;
+            font-size: 1.05rem;
+            color: #00C48C;
+            margin-bottom: 8px;
+        }
+        
+        .career-content p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        
+        .career-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .career-tags span {
+            padding: 5px 12px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #A855F7;
+        }
+        
+        .report-footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+        
         .dashboard-card {
             background: rgba(255,255,255,0.03);
             border-radius: 20px;
@@ -1334,7 +1606,101 @@
             <div class="card"><h3>📁 Во время смены</h3><ul><li>Личное дело Хранителя</li><li>Ежедневные новости от Медиацентра</li><li>Фото и видео с событий</li><li>Возможность отправить письмо родителям</li><li>Обратная связь от наставников</li><li>ONE!Coins (внутриигровая валюта)</li></ul></div>
             <div class="card"><h3>🎁 В конце смены</h3><ul><li>Портфолио со всеми артефактами</li><li>Прототипы и макеты</li><li>3D-модели (при наличии)</li><li>Карта талантов (дашборд)</li><li>Профориентационный отчёт</li><li>Сертификат</li><li>Видео-история смены</li></ul></div>
         </div>
-        <div class="slide-number">17 / 19</div>
+        <div class="slide-number">17 / 20</div>
+    </section>
+
+    <!-- Slide 18: Student Report Template -->
+    <section class="slide slide-accent content-slide">
+        <h2>📋 Пример отчёта ученика</h2>
+        <p class="slide-desc">Персональный отчёт по итогам смены</p>
+        
+        <div class="student-report">
+            <div class="report-header">
+                <div class="report-logo">ИнноСити</div>
+                <div class="report-title">Отчёт Хранителя</div>
+                <div class="report-date">Смена 1 | Июнь 2026</div>
+            </div>
+            
+            <div class="report-body">
+                <div class="report-student">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <h3>Александр Петров</h3>
+                        <div class="student-meta">
+                            <span class="meta-tag age">Возраст: 10 лет</span>
+                            <span class="meta-tag group">Группа: Старшая (10-13)</span>
+                            <span class="meta-tag shift">Смена: 1</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="report-section">
+                    <h4>🎯 Проекты</h4>
+                    <div class="project-list">
+                        <div class="project-item">
+                            <span class="project-icon">🏙️</span>
+                            <div class="project-details">
+                                <strong>Умный город (IoT)</strong>
+                                <span>Система мониторинга воздуха</span>
+                                <span class="project-type">Технический проект</span>
+                            </div>
+                        </div>
+                        <div class="project-item">
+                            <span class="project-icon">📊</span>
+                            <div class="project-details">
+                                <strong>Городские данные</strong>
+                                <span>Дашборд транспорта</span>
+                                <span class="project-type">Аналитический проект</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="report-grid">
+                    <div class="report-section half">
+                        <h4>💪 Карта Талантов</h4>
+                        <div class="talent-bars">
+                            <div class="talent-bar"><span>Техническое мышление</span><div class="bar-track"><div class="bar-fill" style="width: 90%;"></div></div></div>
+                            <div class="talent-bar"><span>Программирование</span><div class="bar-track"><div class="bar-fill" style="width: 75%;"></div></div></div>
+                            <div class="talent-bar"><span>Командная работа</span><div class="bar-track"><div class="bar-fill" style="width: 95%;"></div></div></div>
+                            <div class="talent-bar"><span>Лидерство</span><div class="bar-track"><div class="bar-fill" style="width: 80%;"></div></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-section half">
+                        <h4>🎭 Участие в ролях</h4>
+                        <div class="roles-list">
+                            <span class="role-tag">Шерпа дня</span>
+                            <span class="role-tag">Спикер</span>
+                            <span class="role-tag">Координатор</span>
+                            <span class="role-tag">Аналитик</span>
+                            <span class="role-tag">Мастер-сборщик</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="report-section">
+                    <h4>🎓 Профориентация</h4>
+                    <div class="career-recommendation">
+                        <div class="career-icon">⚙️</div>
+                        <div class="career-content">
+                            <strong>Рекомендуемое направление: Инженерный профиль</strong>
+                            <p>Показал высокие результаты в техническом мышлении и работе с инструментами. Рекомендуется развивать навыки в робототехнике, конструировании и 3D-моделировании.</p>
+                            <div class="career-tags">
+                                <span>Робототехника</span><span>Arduino</span><span>LEGO</span><span>3D-печать</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-footer">
+                <span>ИнноСити — Лаборатория Будущего</span>
+                <span>innocity.ru</span>
+            </div>
+        </div>
+        
+        <div class="slide-number">18 / 20</div>
     </section>
 
     <!-- Slide 18: Интерактив -->
@@ -1365,7 +1731,7 @@
                 <div style="margin-top: 25px; padding: 12px 30px; background: var(--gradient-1); border-radius: 25px; font-weight: 700; display: inline-block;">НАЧАТЬ →</div>
             </div>
         </div>
-        <div class="slide-number">18 / 19</div>
+        <div class="slide-number">19 / 20</div>
     </section>
 
     <!-- Slide 19: Контакты -->
@@ -1379,7 +1745,7 @@
             <div class="stat-box"><div class="stat-number" style="font-size: 3rem;">2</div><div class="stat-label">проекта</div></div>
         </div>
         <div class="badge" style="margin-top: 40px;">Презентация 2026</div>
-        <div class="slide-number">19 / 19</div>
+        <div class="slide-number">20 / 20</div>
     </section>
 
     <script>
