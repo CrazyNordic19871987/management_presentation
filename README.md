@@ -1,83 +1,51 @@
-[README.md](https://github.com/user-attachments/files/25688348/README.md)
-# ИнноСити (InnoCity) - Summer Camp Presentation
+# 🌆 ИнноСити (InnoCity) — Summer Camp for future creators
 
-Educational camp presentation website for children aged 7-13.
+**ИнноСити** — это образовательный летний лагерь для детей 7–13 лет, где урбанистика, предпринимательство и ESG встречаются с английским и AI.  
+14 дней с проектным обучением, ролями и картой талантов.
 
-## Overview
+[![Slides](https://img.shields.io/badge/slides-19-blue?style=for-the-badge&logo=powerpoint)](#)
+[![Game](https://img.shields.io/badge/quiz–game-00C48C?style=for-the-badge&logo=javascript)](#)
+[![Figma](https://img.shields.io/badge/made%20with-March%202026-0B1A33?style=for-the-badge)](#)
+[![Camp start](https://img.shields.io/badge/start-7%20June%202026-FFB800?style=for-the-badge)](#)
 
-**ИнноСити** (InnoCity) is a 14-day educational summer camp focused on:
-- Project-based learning
-- Entrepreneurship
-- ESG + Urbanism
-- English language immersion
-- Artificial Intelligence basics
+---
 
-## Files
+## 🎯 Концепция
 
-### Main Files
-- `index.html` - Main presentation (19 slides)
-- `gloria-game.html` - Browser game "ИнноСити: Хранитель города"
-- `gloria-quiz.html` - Interactive quiz
+14‑дневный лагерь, в котором дети погружаются в **городское развитие**, **осознанное предпринимательство** и **искусственный интеллект**. Каждый участник проходит через 4 департамента, пробует 8 ролей и создаёт 2 проекта. Английский — ежедневно с носителями.
 
-### Excel Files
-- `ИнноСити_Финансовая_модель.xlsx` - Financial model (5 sheets)
-- `ИнноСити_Контент_план.xlsx` - Content plan (8 sheets)
+| Смена | Дней | Детей | Возраст | Проектов | Ролей |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| 5 смен | 14 | до 50 | 7–9 / 10–13 | 2 на команду | 8 (ротация) |
 
-### PowerPoint
-- `InnoCity_Presentation.pptx` - PowerPoint version (19 slides)
+---
 
-## Features
+## 📁 Состав репозитория
 
-- 5 camp shifts, 14 days each
-- Up to 50 children per shift
-- 4 departments with 10-12 children each
-- 2 projects per squad
-- 8 rotating roles every 2-3 days
-- Age groups: 7-9 and 10-13 years
-- Native English speakers + English-speaking pedagogues
-- Final: project presentation, talent map, certificate
+```ascii
+📦 innocity-camp
+├── 📄 index.html                 # 19 слайдов презентации (основной файл)
+├── 📄 gloria-game.html            # Браузерная игра «Хранитель города»
+├── 📄 gloria-quiz.html            # Интерактивная викторина
+├── 📊 ИнноСити_Финансовая_модель.xlsx
+├── 📊 ИнноСити_Контент_план.xlsx
+├── 📀 InnoCity_Presentation.pptx  # PowerPoint‑версия
+└── 📝 README.md                   # ты здесь
 
-## Tech Stack
 
-- HTML5, CSS3
-- Vanilla JavaScript
-- Responsive design (mobile-friendly)
-- SVG for charts
+┌─────────────────────────────────────────────────────────┐
+│  🏙️ ДЕПАРТАМЕНТЫ (4 шт)                                  │
+│  ─────────────────                                       │
+│  🏗️ Строительный  |  🌿 Экологический  |  💡 Креативный  │
+│  📊 Аналитический                                        │
+│  (10–12 детей в каждом, смешанный возраст)              │
+└─────────────────────────────────────────────────────────┘
 
-## Sections
+🌟 зона гениальности    📈 потенциал     🛠️ освоенные навыки  
+🧭 рекомендованная профессия (data‑story, эко‑архитектор и др.)
 
-1. **Главная** - Title with timer countdown
-2. **О лагере** - About the camp (4 pillars)
-3. **Формат** - Program format
-4. **Департаменты** - 4 departments
-5. **Проекты** - Project directions
-6. **Задачи** - Tasks by stage
-7. **Предпринимательство** - Entrepreneurship
-8. **ESG + Урбанистика** - ESG + Urbanism
-9. **Возраст** - Age groups
-10. **Роли** - 8 roles
-11. **Хард Скиллы** - Hard skills
-12. **Софт Скиллы** - Soft skills (21st century skills)
-13. **Карта Талантов** - Talent map dashboard
-14. **Профориентация** - Career guidance
-15. **Английский** - English program
-16. **Финал** - Final presentation
-17. **Результаты** - Results
-18. **Интерактив** - Interactive game & quiz
-19. **Контакты** - Contacts
 
-## Design
+git clone https://github.com/yourname/innocity-camp.git
+cd innocity-camp
+# просто открой index.html в любом современном браузере
 
-- Corporate colors: Dark Blue (#0B1A33), Turquoise (#00C48C), Gold (#FFB800)
-- Slide-based navigation
-- Left sidebar with numbered labels
-- Responsive: Desktop, Tablet, Mobile
-
-## Installation
-
-Simply open `index.html` in any modern browser.
-
-## Created
-
-- March 2026
-- Camp start date: June 7, 2026
