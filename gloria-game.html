@@ -4,739 +4,1177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ИнноСити: Хранитель города</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --deep-blue: #0B1A33;
-            --mint: #00C48C;
-            --gold: #FFB800;
-            --white: #FFFFFF;
-            --red: #FF6B6B;
-            --purple: #A855F7;
+            --primary: #0B1A33;
+            --accent: #00C48C;
+            --accent-alt: #FFB800;
+            --accent-purple: #A855F7;
+            --accent-teal: #2DD4BF;
+            --white: #ffffff;
+            --dark: #060d1a;
+            --glass-effect: rgba(255,255,255,0.1);
+            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Exo 2', sans-serif;
-            background: var(--deep-blue);
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
             color: var(--white);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* Start Screen */
-        #startScreen {
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+
+        .header {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--deep-blue);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            right: 0;
             z-index: 100;
-            transition: transform 0.8s ease;
-        }
-
-        #startScreen.hidden {
-            transform: translateY(-100%);
-        }
-
-        .game-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--mint), var(--gold), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            text-shadow: 0 0 50px rgba(0, 196, 140, 0.5);
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.2); }
-        }
-
-        .game-subtitle {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 40px;
-        }
-
-        .start-btn {
-            padding: 20px 60px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--mint), #00A878);
-            border: none;
-            border-radius: 50px;
-            color: var(--deep-blue);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.4);
-        }
-
-        .start-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 20px 50px rgba(0, 196, 140, 0.6);
-        }
-
-        /* Game Container */
-        #gameContainer {
-            position: relative;
-            width: 900px;
-            height: 600px;
-            border: 3px solid var(--mint);
-            border-radius: 20px;
-            overflow: hidden;
-            background: linear-gradient(180deg, #0a0f1a 0%, var(--deep-blue) 100%);
-            box-shadow: 0 0 50px rgba(0, 196, 140, 0.3);
-        }
-
-        /* Canvas */
-        #gameCanvas {
-            display: block;
-        }
-
-        /* UI Overlay */
-        #ui {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .hud {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(11, 26, 51, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 196, 140, 0.1);
         }
 
-        .hud-item {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px 20px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .player-avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
-            border: 1px solid var(--mint);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .hud-item span {
-            color: var(--gold);
+        .player-avatar:hover { transform: scale(1.1) rotate(5deg); }
+
+        .player-level { text-align: right; }
+        .player-level-num {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .player-level-label { font-size: 0.65rem; color: rgba(255,255,255,0.5); }
+
+        .xp-bar-container {
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 3px;
+        }
+        .xp-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 8px var(--accent);
         }
 
-        /* Mission Panel */
-        #missionPanel {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px 30px;
-            border-radius: 15px;
-            border: 2px solid var(--gold);
-            max-width: 80%;
-            text-align: center;
+        .header-actions {
+            display: flex;
+            gap: 8px;
         }
 
-        #missionPanel h3 {
-            color: var(--gold);
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 5px;
+        .header-btn {
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: var(--white);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        #missionPanel p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
+        .header-btn:hover {
+            background: rgba(0, 196, 140, 0.2);
+            border-color: var(--accent);
         }
 
-        /* Oracle Dialog */
-        #oracleDialog {
-            position: absolute;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(168, 85, 247, 0.2);
-            border: 2px solid var(--purple);
-            border-radius: 20px;
-            padding: 20px 30px;
-            max-width: 70%;
-            text-align: center;
-            display: none;
+        .stats-bar {
+            display: flex;
+            gap: 10px;
         }
 
-        #oracleDialog.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background: var(--card-gradient);
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .stat-item:hover { background: rgba(0, 196, 140, 0.1); border-color: rgba(0, 196, 140, 0.3); }
+        .stat-icon { font-size: 14px; }
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .stat-value.green { color: var(--accent); }
+        .stat-value.yellow { color: var(--accent-alt); }
+        .stat-value.purple { color: var(--accent-purple); }
+        .stat-value.red { color: #ff6b6b; }
+
+        .game-container {
+            display: flex;
+            height: 100vh;
+            padding-top: 60px;
         }
 
-        #oracleDialog .oracle-avatar {
-            font-size: 3rem;
+        .sidebar {
+            width: 240px;
+            background: var(--dark);
+            padding: 15px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar-section { }
+        .sidebar-title {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 10px;
         }
 
-        #oracleDialog p {
-            font-size: 1rem;
-            line-height: 1.6;
+        .quest-item {
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* Controls */
-        .controls {
-            margin-top: 20px;
+        .quest-item:hover { background: rgba(0, 196, 140, 0.1); border-color: rgba(0, 196, 140, 0.3); }
+        .quest-item.active { background: rgba(0, 196, 140, 0.15); border-color: var(--accent); }
+        .quest-item.completed { opacity: 0.5; }
+        .quest-item.completed::after { content: '✓'; color: var(--accent); font-weight: bold; margin-left: 5px; }
+        .quest-reward { font-size: 0.65rem; color: var(--accent-alt); margin-top: 3px; }
+
+        .daily-challenge {
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(0,196,140,0.1));
+            border: 1px solid rgba(168,85,247,0.3);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .daily-challenge-title { font-size: 0.7rem; color: var(--accent-purple); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+        .daily-challenge-task { font-size: 0.75rem; margin-bottom: 5px; }
+        .daily-challenge-progress { font-size: 0.65rem; color: var(--accent-alt); }
+
+        .building-btn {
             display: flex;
-            gap: 20px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-        }
-
-        .controls kbd {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin: 0 3px;
-        }
-
-        /* Department Selection */
-        #departmentSelect {
-            position: absolute;
-            top: 0;
-            left: 0;
+            align-items: center;
+            gap: 8px;
             width: 100%;
-            height: 100%;
-            background: rgba(11, 26, 51, 0.95);
+            padding: 8px 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .building-btn:hover { background: rgba(0, 196, 140, 0.15); border-color: rgba(0, 196, 140, 0.4); transform: translateX(3px); }
+        .building-btn.selected { background: rgba(0, 196, 140, 0.25); border-color: var(--accent); box-shadow: 0 0 12px rgba(0, 196, 140, 0.3); }
+        .building-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .building-icon { font-size: 18px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 6px; }
+        .building-info { flex: 1; }
+        .building-name { font-weight: 600; font-size: 0.8rem; }
+        .building-cost { font-size: 0.65rem; color: rgba(255,255,255,0.5); }
+        .building-level { font-size: 0.65rem; color: var(--accent-alt); }
+
+        .action-btn {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+        }
+
+        .action-btn:hover { background: rgba(0,140, 0 196, .15); border-color: rgba(0, 196, 140, 0.4); }
+        .action-btn.primary { background: linear-gradient(135deg, var(--accent), #00A67D); border: none; color: var(--primary); font-weight: 600; }
+
+        .game-area {
+            flex: 1;
+            position: relative;
+            background: 
+                radial-gradient(ellipse at 30% 70%, rgba(0, 196, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(255, 184, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #1a3a5c 0%, #0d2238 100%);
+            overflow: hidden;
+        }
+
+        .game-area::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300C48C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift { from { background-position: 0 0; } to { background-position: 60px 60px; } }
+
+        .grid {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: grid;
+            grid-template-columns: repeat(12, 50px);
+            grid-template-rows: repeat(8, 50px);
+            gap: 2px;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .cell:hover { background: rgba(0, 196, 140, 0.2); border-color: rgba(0, 196, 140, 0.5); transform: scale(1.1); z-index: 10; }
+        .cell.occupied { cursor: default; animation: buildingAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes buildingAppear { 0% { transform: scale(0) rotate(-180deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        .cell.occupied:hover { transform: scale(1.15); }
+        
+        .cell.upgrade-glow::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 2px solid var(--accent-alt);
+            border-radius: 6px;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .building-level-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            font-size: 0.55rem;
+            background: var(--accent-alt);
+            color: var(--primary);
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .cell.grass { background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%); }
+        .cell.water { background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%); }
+        .cell.forest { background: linear-gradient(135deg, #1a4a2a 0%, #2a5a3a 100%); }
+        .cell.mountain { background: linear-gradient(135deg, #4a4a4a, #6a6a6a); }
+        .cell.beach { background: linear-gradient(135deg, #f0e68c, #ffd700); }
+
+        .weather-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .weather-overlay.rain { background: linear-gradient(transparent, rgba(0,150,255,0.15)); opacity: 1; }
+        .weather-overlay.storm { background: linear-gradient(transparent, rgba(100,100,150,0.3)); opacity: 1; }
+        .weather-overlay.sunny { background: radial-gradient(circle at 50% 0%, rgba(255,255,0,0.1), transparent); opacity: 1; }
+
+        .info-panel {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            width: 180px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .info-title { font-size: 0.8rem; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .info-stat { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; }
+        .info-stat:last-child { border-bottom: none; }
+        .info-label { color: rgba(255,255,255,0.6); }
+        .info-value { font-weight: 600; }
+        .info-value.positive { color: var(--accent); }
+        .info-value.negative { color: #ff6b6b; }
+
+        .events-panel {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            width: 220px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .event-item { padding: 8px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-bottom: 6px; font-size: 0.75rem; }
+        .event-item:last-child { margin-bottom: 0; }
+        .event-time { color: var(--accent); font-size: 0.65rem; margin-bottom: 2px; }
+        .event-item.positive { border-left: 3px solid var(--accent); }
+        .event-item.negative { border-left: 3px solid #ff6b6b; }
+        .event-item.special { border-left: 3px solid var(--accent-alt); }
+
+        .achievements-panel {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .achievements-title { font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .achievements-grid { display: flex; gap: 5px; flex-wrap: wrap; }
+        .achievement { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .achievement:hover { transform: scale(1.1); }
+        .achievement.locked { opacity: 0.3; filter: grayscale(1); }
+        .achievement.unlocked { background: linear-gradient(135deg, rgba(255,184,0,0.2), rgba(0,196,140,0.2)); box-shadow: 0 0 10px rgba(255,184,0,0.3); }
+        .achievement-tooltip { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.95); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 6px 10px; font-size: 0.65rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 100; }
+        .achievement:hover .achievement-tooltip { opacity: 1; }
+
+        .day-night {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .message-box {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.9);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
             z-index: 50;
         }
 
-        #departmentSelect.hidden {
-            display: none;
-        }
+        .message-box.show { opacity: 1; }
 
-        #departmentSelect h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: var(--mint);
-            margin-bottom: 30px;
-        }
-
-        .dept-options {
-            display: flex;
-            gap: 20px;
-        }
-
-        .dept-btn {
-            width: 180px;
-            padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .dept-btn:hover {
-            transform: translateY(-10px);
-            border-color: var(--mint);
-            box-shadow: 0 15px 30px rgba(0, 196, 140, 0.3);
-        }
-
-        .dept-btn .icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .dept-btn .name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            color: var(--white);
-        }
-
-        /* Victory Screen */
-        #victoryScreen {
+        .floating-number {
             position: absolute;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+            z-index: 100;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-40px); }
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.95);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 50;
+            max-width: 160px;
+            line-height: 1.4;
+        }
+
+        .tooltip.show { opacity: 1; }
+
+        .modal {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 26, 51, 0.95);
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 60;
-        }
-
-        #victoryScreen.hidden {
-            display: none;
-        }
-
-        #victoryScreen h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 20px;
-            animation: victoryPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes victoryPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        #victoryScreen .role {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-
-        #victoryScreen p {
-            font-size: 1.2rem;
-            max-width: 500px;
-            text-align: center;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        #victoryScreen .restart-btn {
-            padding: 15px 40px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            background: var(--mint);
-            border: none;
-            border-radius: 30px;
-            color: var(--deep-blue);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        #victoryScreen .restart-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.4);
-        }
-
-        .victory-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
-
-        .victory-buttons .camp-btn {
-            padding: 15px 35px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            background: linear-gradient(135deg, var(--gold), #ff9500);
-            border: none;
-            border-radius: 30px;
-            color: var(--deep-blue);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .victory-buttons .camp-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 184, 0, 0.4);
-        }
-
-        /* Back link */
-        .back-link {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            color: var(--mint);
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 20px;
-            border: 1px solid var(--mint);
-            transition: all 0.3s;
             z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
         }
 
-        .back-link:hover {
-            background: var(--mint);
-            color: var(--deep-blue);
+        .modal.show { opacity: 1; pointer-events: auto; }
+
+        .modal-content {
+            background: var(--primary);
+            border: 1px solid rgba(0, 196, 140, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 420px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .modal.show .modal-content { transform: scale(1); }
+        .modal-icon { font-size: 60px; margin-bottom: 12px; animation: float 2s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .modal h2 { font-size: 1.5rem; margin-bottom: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-alt)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .modal p { color: rgba(255,255,255,0.8); margin-bottom: 20px; line-height: 1.5; font-size: 0.9rem; }
+
+        .character-select { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        .char-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .char-option:hover { transform: scale(1.1); }
+        .char-option.selected { border-color: var(--accent); background: rgba(0, 196, 140, 0.2); box-shadow: 0 0 15px rgba(0, 196, 140, 0.4); }
+
+        .btn { padding: 12px 25px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.3s ease; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #00A67D); color: var(--primary); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 196, 140, 0.4); }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .grid { grid-template-columns: repeat(8, 40px); grid-template-rows: repeat(6, 40px); }
+            .cell { width: 40px; height: 40px; font-size: 18px; }
+            .info-panel { width: 150px; padding: 10px; }
+            .events-panel { width: 180px; }
+            .achievements-panel { display: none; }
+            .stats-bar { gap: 5px; }
+            .stat-item { padding: 4px 8px; }
         }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-link">← К презентации</a>
-
-    <!-- Start Screen -->
-    <div id="startScreen">
-        <h1 class="game-title">ИнноСити</h1>
-        <p class="game-subtitle">Хранитель города</p>
-        <button class="start-btn" onclick="startGame()">НАЧАТЬ ИГРУ</button>
-    </div>
-
-    <!-- Game Container -->
-    <div id="gameContainer">
-        <canvas id="gameCanvas" width="900" height="600"></canvas>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🏙️</div>
+            <span>ИнноСити</span>
+        </div>
         
-        <!-- UI -->
-        <div id="ui">
-            <div class="hud">
-                <div class="hud-item">HP: <span id="hpDisplay">❤️❤️❤️</span></div>
-                <div class="hud-item">XP: <span id="xpDisplay">0</span></div>
-                <div class="hud-item">Уровень: <span id="levelDisplay">1</span></div>
-            </div>
-            
-            <div id="oracleDialog">
-                <div class="oracle-avatar">👁️</div>
-                <p id="oracleText">Привет, Хранитель!</p>
-            </div>
-            
-            <div id="missionPanel">
-                <h3>📍 Миссия</h3>
-                <p id="missionText">Найди Оракула в центре города</p>
+        <div class="player-info">
+            <div class="player-avatar" id="player-avatar" onclick="showCharacterSelect()">🧑‍🎤</div>
+            <div class="player-level">
+                <div class="player-level-num">Ур. <span id="player-level">1</span></div>
+                <div class="xp-bar-container"><div class="xp-bar" id="xp-bar"></div></div>
             </div>
         </div>
-
-        <!-- Department Selection -->
-        <div id="departmentSelect" class="hidden">
-            <h2>Выбери свой путь</h2>
-            <div class="dept-options">
-                <div class="dept-btn" onclick="chooseDepartment('engineer')">
-                    <div class="icon">🏗️</div>
-                    <div class="name">Инженерный</div>
-                </div>
-                <div class="dept-btn" onclick="chooseDepartment('digital')">
-                    <div class="icon">💻</div>
-                    <div class="name">Цифровой</div>
-                </div>
-                <div class="dept-btn" onclick="chooseDepartment('eco')">
-                    <div class="icon">🌱</div>
-                    <div class="name">Эко-лаб</div>
-                </div>
-                <div class="dept-btn" onclick="chooseDepartment('media')">
-                    <div class="icon">📸</div>
-                    <div class="name">Новости</div>
-                </div>
-            </div>
+        
+        <div class="header-actions">
+            <button class="header-btn" onclick="saveGame()">💾</button>
+            <button class="header-btn" onclick="loadGame()">📂</button>
         </div>
+        
+        <div class="stats-bar">
+            <div class="stat-item"><span class="stat-icon">💰</span><span class="stat-value yellow" id="money">1000</span></div>
+            <div class="stat-item"><span class="stat-icon">👥</span><span class="stat-value" id="population">0</span></div>
+            <div class="stat-item"><span class="stat-icon">⚡</span><span class="stat-value green" id="energy">50</span></div>
+            <div class="stat-item"><span class="stat-icon">🌱</span><span class="stat-value purple" id="eco">50</span></div>
+        </div>
+    </header>
 
-        <!-- Victory Screen -->
-        <div id="victoryScreen" class="hidden">
-            <h1>ПОБЕДА!</h1>
-            <div class="role" id="finalRole">🏆</div>
-            <p id="finalText">Ты спас город Глория!</p>
-            <div class="victory-buttons">
-                <button class="restart-btn" onclick="restartGame()">ИГРАТЬ СНОВА</button>
-                <a href="index.html" class="camp-btn">К ПРЕЗЕНТАЦИИ</a>
+    <div class="game-container">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="daily-challenge">
+                    <div class="daily-challenge-title">🎯 Ежедневный вызов</div>
+                    <div class="daily-challenge-task" id="daily-task">Построй 3 дома</div>
+                    <div class="daily-challenge-progress" id="daily-progress">0/3</div>
+                </div>
             </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">📜 Квесты</div>
+                <div class="quest-item active" id="quest-1"><div>🏠 Построй 3 жилых дома</div><div class="quest-reward">+50 XP</div></div>
+                <div class="quest-item" id="quest-2"><div>⚡ Установи 2 источника энергии</div><div class="quest-reward">+40 XP</div></div>
+                <div class="quest-item" id="quest-3"><div>🌱 Экология 60+</div><div class="quest-reward">+60 XP</div></div>
+                <div class="quest-item" id="quest-4"><div>👥 20 жителей</div><div class="quest-reward">+80 XP</div></div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">🏗️ Здания</div>
+                <button class="building-btn" data-type="house" data-cost="100" data-energy="-5" data-eco="-2" data-pop="5">
+                    <div class="building-icon">🏠</div>
+                    <div class="building-info">
+                        <div class="building-name">Жилой дом</div>
+                        <div class="building-cost">💰100 ⚡-5 🌱-2</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="solar" data-cost="150" data-energy="20" data-eco="5" data-pop="0">
+                    <div class="building-icon">☀️</div>
+                    <div class="building-info">
+                        <div class="building-name">Солнечная панель</div>
+                        <div class="building-cost">💰150 ⚡+20 🌱+5</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="wind" data-cost="200" data-energy="25" data-eco="8" data-pop="0">
+                    <div class="building-icon">💨</div>
+                    <div class="building-info">
+                        <div class="building-name">Ветряк</div>
+                        <div class="building-cost">💰200 ⚡+25 🌱+8</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="park" data-cost="80" data-energy="2" data-eco="15" data-pop="0">
+                    <div class="building-icon">🌳</div>
+                    <div class="building-info">
+                        <div class="building-name">Парк</div>
+                        <div class="building-cost">💰80 ⚡+2 🌱+15</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="school" data-cost="300" data-energy="-15" data-eco="5" data-pop="0">
+                    <div class="building-icon">🏫</div>
+                    <div class="building-info">
+                        <div class="building-name">Школа</div>
+                        <div class="building-cost">💰300 ⚡-15 🌱+5</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="hospital" data-cost="400" data-energy="-20" data-eco="3" data-pop="0">
+                    <div class="building-icon">🏥</div>
+                    <div class="building-info">
+                        <div class="building-name">Больница</div>
+                        <div class="building-cost">💰400 ⚡-20 🌱+3</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="shop" data-cost="150" data-energy="-8" data-eco="-1" data-pop="0">
+                    <div class="building-icon">🏪</div>
+                    <div class="building-info">
+                        <div class="building-name">Магазин</div>
+                        <div class="building-cost">💰150 ⚡-8 🌱-1</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="factory" data-cost="250" data-energy="15" data-eco="-10" data-pop="0">
+                    <div class="building-icon">🏭</div>
+                    <div class="building-info">
+                        <div class="building-name">Фабрика</div>
+                        <div class="building-cost">💰250 ⚡+15 🌱-10</div>
+                    </div>
+                </button>
+                <button class="building-btn" data-type="recycle" data-cost="180" data-energy="5" data-eco="12" data-pop="0">
+                    <div class="building-icon">♻️</div>
+                    <div class="building-info">
+                        <div class="building-name">Переработка</div>
+                        <div class="building-cost">💰180 ⚡+5 🌱+12</div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">🎯 Действия</div>
+                <button class="action-btn primary" id="next-day-btn">⏭️ Следующий день</button>
+                <button class="action-btn" id="upgrade-btn">⬆️ Улучшить здание</button>
+                <button class="action-btn" id="reset-btn">🔄 Новая игра</button>
+            </div>
+        </aside>
+
+        <div class="game-area" id="game-area">
+            <div class="weather-overlay" id="weather"></div>
+            
+            <div class="day-night">
+                <span id="time-icon">☀️</span>
+                <span id="time-text">День 1</span>
+            </div>
+            
+            <div class="grid" id="grid"></div>
+            
+            <div class="achievements-panel">
+                <div class="achievements-title">🏆</div>
+                <div class="achievements-grid">
+                    <div class="achievement locked" id="ach-1">🏠<div class="achievement-tooltip">Первый дом</div></div>
+                    <div class="achievement locked" id="ach-2">⚡<div class="achievement-tooltip">Энергетик</div></div>
+                    <div class="achievement locked" id="ach-3">🌱<div class="achievement-tooltip">Эко-герой</div></div>
+                    <div class="achievement locked" id="ach-4">👥<div class="achievement-tooltip">Мэр</div></div>
+                    <div class="achievement locked" id="ach-5">💰<div class="achievement-tooltip">Богач</div></div>
+                    <div class="achievement locked" id="ach-6">🎯<div class="achievement-tooltip">Перфекционист</div></div>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <div class="info-title">📊 Статистика</div>
+                <div class="info-stat"><span class="info-label">Жители</span><span class="info-value" id="info-pop">0</span></div>
+                <div class="info-stat"><span class="info-label">Доход</span><span class="info-value positive" id="info-income">+0</span></div>
+                <div class="info-stat"><span class="info-label">Энергия</span><span class="info-value" id="info-energy">50</span></div>
+                <div class="info-stat"><span class="info-label">Экология</span><span class="info-value" id="info-eco">50</span></div>
+                <div class="info-stat"><span class="info-label">Счастье</span><span class="info-value" id="info-happy">50%</span></div>
+            </div>
+
+            <div class="events-panel" id="events">
+                <div class="event-item positive"><div class="event-time">Начало</div>Добро пожаловать в ИнноСити!</div>
+            </div>
+
+            <div class="message-box" id="message"></div>
+            <div class="tooltip" id="tooltip"></div>
         </div>
     </div>
 
-    <div class="controls">
-        Управление: <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> или <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> | <kbd>Пробел</kbd> - действие
+    <div class="modal" id="character-modal">
+        <div class="modal-content">
+            <div class="modal-icon">🎭</div>
+            <h2>Выбери персонажа</h2>
+            <div class="character-select">
+                <div class="char-option selected" data-char="🧑‍🎤">🧑‍🎤</div>
+                <div class="char-option" data-char="🧑‍🔬">🧑‍🔬</div>
+                <div class="char-option" data-char="🧑‍🎨">🧑‍🎨</div>
+                <div class="char-option" data-char="🧑‍💼">🧑‍💼</div>
+                <div class="char-option" data-char="🧑‍🚀">🧑‍🚀</div>
+            </div>
+            <button class="btn btn-primary" onclick="selectCharacter()">Начать игру</button>
+        </div>
+    </div>
+
+    <div class="modal mission-modal" id="start-modal">
+        <div class="modal-content">
+            <div class="modal-icon">🏙️</div>
+            <h2>Добро пожаловать!</h2>
+            <p>Ты — мэр города будущего! Балансируй экономику, экологию и счастье жителей. Выполняй квесты, чтобы расти!</p>
+            <p style="color: var(--accent-alt); margin-top: 10px;">🎯 Цель: 50+ жителей, 70%+ счастье</p>
+            <button class="btn btn-primary" onclick="startGame()">Начать карьеру</button>
+        </div>
+    </div>
+
+    <div class="modal" id="levelup-modal">
+        <div class="modal-content">
+            <div class="modal-icon">⬆️</div>
+            <h2>Уровень повышен!</h2>
+            <p>Теперь ты <span id="new-level-text" style="color: var(--accent-alt); font-weight: 700;">уровень 2</span></p>
+            <button class="btn btn-primary" onclick="closeLevelUp()">Продолжить</button>
+        </div>
+    </div>
+
+    <div class="modal" id="event-modal">
+        <div class="modal-content">
+            <div class="modal-icon" id="event-icon">🎉</div>
+            <h2 id="event-title">Событие!</h2>
+            <p id="event-text">Произошло что-то интересное!</p>
+            <button class="btn btn-primary" onclick="closeEvent()">Понятно</button>
+        </div>
+    </div>
+
+    <div class="modal" id="gameover-modal">
+        <div class="modal-content">
+            <div class="modal-icon">🏆</div>
+            <h2 id="gameover-title">Поздравляем!</h2>
+            <p id="gameover-text">Город процветает!</p>
+            <button class="btn btn-primary" onclick="restartGame()">Играть снова</button>
+        </div>
     </div>
 
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Game State
-        let game = {
-            started: false,
-            phase: 'explore',
-            department: null,
-            hp: 3,
-            xp: 0,
-            level: 1,
-            mission: 0,
-            player: { x: 450, y: 500, size: 30, speed: 5 },
-            keys: {},
-            npcs: [],
-            collectibles: [],
-            particles: []
+        const CHARACTERS = ['🧑‍🎤', '🧑‍🔬', '🧑‍🎨', '🧑‍💼', '🧑‍🚀'];
+        const BUILDINGS = {
+            house: { icon: '🏠', name: 'Жилой дом', cost: 100, energy: -5, eco: -2, pop: 5, income: 10, upgradeBonus: 1.5 },
+            solar: { icon: '☀️', name: 'Солнечная панель', cost: 150, energy: 20, eco: 5, pop: 0, income: 0, upgradeBonus: 1.5 },
+            wind: { icon: '💨', name: 'Ветряк', cost: 200, energy: 25, eco: 8, pop: 0, income: 0, upgradeBonus: 1.5 },
+            park: { icon: '🌳', name: 'Парк', cost: 80, energy: 2, eco: 15, pop: 0, income: 0, upgradeBonus: 1.5 },
+            school: { icon: '🏫', name: 'Школа', cost: 300, energy: -15, eco: 5, pop: 0, income: 5, upgradeBonus: 1.5 },
+            hospital: { icon: '🏥', name: 'Больница', cost: 400, energy: -20, eco: 3, pop: 0, income: 5, upgradeBonus: 1.5 },
+            shop: { icon: '🏪', name: 'Магазин', cost: 150, energy: -8, eco: -1, pop: 0, income: 25, upgradeBonus: 1.5 },
+            factory: { icon: '🏭', name: 'Фабрика', cost: 250, energy: 15, eco: -10, pop: 0, income: 40, upgradeBonus: 1.5 },
+            recycle: { icon: '♻️', name: 'Переработка', cost: 180, energy: 5, eco: 12, pop: 0, income: 15, upgradeBonus: 1.5 }
         };
 
-        // Game Objects
-        const buildings = [
-            { x: 100, y: 80, w: 150, h: 100, color: '#1a3a5c', name: 'Штаб' },
-            { x: 650, y: 80, w: 150, h: 100, color: '#1a3a5c', name: 'Лаборатория' },
-            { x: 100, y: 350, w: 120, h: 80, color: '#2d4a3e', name: 'Эко-зона' },
-            { x: 680, y: 350, w: 120, h: 80, color: '#3d2d4a', name: 'Медиа-центр' },
-            { x: 350, y: 200, w: 200, h: 150, color: '#4a3a1a', name: 'ОРАКУЛ', isOracle: true }
+        const EVENTS = [
+            { name: 'Фестиваль', icon: '🎉', condition: (s) => s.happiness > 70, effect: { money: 200, happiness: 10 }, message: 'Городской фестиваль принёс доход!' },
+            { name: 'Дождь', icon: '🌧️', condition: () => Math.random() < 0.15, effect: { eco: 10, energy: -10 }, message: 'Дождь очистил воздух, но снизил энергию!' },
+            { name: 'Буря', icon: '⛈️', condition: () => Math.random() < 0.08, effect: { money: -100, happiness: -10 }, message: 'Буря повредила здания!' },
+            { name: 'Туристы', icon: '🚗', condition: (s) => s.population > 20 && s.happiness > 60, effect: { money: 150 }, message: 'Туристы приехали в город!' },
+            { name: 'Солнечный день', icon: '☀️', condition: () => Math.random() < 0.2, effect: { energy: 15 }, message: 'Солнечная погода - бонус к энергии!' },
+            { name: 'Эко-акция', icon: '🌿', condition: (s) => s.eco > 70, effect: { happiness: 15, population: 3 }, message: 'Эко-акция привлекла новых жителей!' }
         ];
 
-        const npcTypes = {
-            engineer: { emoji: '👷', mission: 'Почини вентиляцию', xp: 50 },
-            digital: { emoji: '👨‍💻', mission: 'Найди вирус', xp: 50 },
-            eco: { emoji: '🧑‍🔬', mission: 'Собери пробы', xp: 50 },
-            media: { emoji: '📸', mission: 'Сделай репортаж', xp: 50 }
+        let gameState = {
+            money: 1000, population: 0, energy: 50, eco: 50, happiness: 50,
+            day: 1, buildings: [], selectedBuilding: null, playerChar: '🧑‍🎤',
+            level: 1, xp: 0, xpToNextLevel: 100,
+            quests: { 1: { completed: false, target: { type: 'house', count: 3 }, progress: 0 }, 
+                      2: { completed: false, target: { types: ['solar', 'wind'], count: 2 }, progress: 0 },
+                      3: { completed: false, target: { eco: 60 }, progress: 0 },
+                      4: { completed: false, target: { pop: 20 }, progress: 0 } },
+            achievements: { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false },
+            dailyChallenge: { type: 'houses', target: 3, progress: 0, completed: false },
+            upgradeMode: false,
+            lastPlayed: Date.now()
         };
 
-        function initNPCs() {
-            game.npcs = [
-                { x: 175, y: 150, type: 'engineer', completed: false },
-                { x: 725, y: 150, type: 'digital', completed: false },
-                { x: 160, y: 400, type: 'eco', completed: false },
-                { x: 740, y: 400, type: 'media', completed: false },
-                { x: 450, y: 300, type: 'oracle', completed: false }
-            ];
+        let selectedCharacter = '🧑‍🎤';
+        const grid = document.getElementById('grid');
+        let cells = [];
+
+        document.querySelectorAll('.char-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.char-option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selectedCharacter = opt.dataset.char;
+            });
+        });
+
+        function selectCharacter() {
+            gameState.playerChar = selectedCharacter;
+            document.getElementById('player-avatar').textContent = selectedCharacter;
+            document.getElementById('character-modal').classList.remove('show');
+            document.getElementById('start-modal').classList.add('show');
         }
 
-        document.addEventListener('keydown', (e) => {
-            game.keys[e.key.toLowerCase()] = true;
-            if (e.key === ' ' || e.key === 'Enter') interact();
+        function showCharacterSelect() { document.getElementById('character-modal').classList.add('show'); }
+
+        function initGrid() {
+            grid.innerHTML = '';
+            cells = [];
+            const terrainTypes = ['grass', 'grass', 'grass', 'grass', 'forest', 'water', 'mountain', 'beach'];
+            for (let i = 0; i < 96; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                const rand = Math.random();
+                if (rand < 0.55) cell.classList.add('grass');
+                else if (rand < 0.70) cell.classList.add('forest');
+                else if (rand < 0.80) cell.classList.add('water');
+                else if (rand < 0.90) cell.classList.add('mountain');
+                else cell.classList.add('beach');
+                cell.dataset.index = i;
+                cell.addEventListener('click', () => handleCellClick(i));
+                cell.addEventListener('mouseenter', (e) => showTooltip(e, i));
+                cell.addEventListener('mouseleave', hideTooltip);
+                grid.appendChild(cell);
+                cells.push(cell);
+            }
+        }
+
+        function showTooltip(e, index) {
+            const cell = cells[index];
+            const tooltip = document.getElementById('tooltip');
+            if (cell.dataset.building) {
+                const type = cell.dataset.building;
+                const building = BUILDINGS[type];
+                const level = parseInt(cell.dataset.level || 1);
+                const multiplier = Math.pow(building.upgradeBonus, level - 1);
+                tooltip.innerHTML = `<strong>${building.icon} ${building.name}</strong><br>Уровень: ${level}<br>Доход: +${Math.floor(building.income * multiplier)}<br>Энергия: ${building.energy > 0 ? '+' : ''}${building.energy * multiplier}<br>${level < 3 ? `<span style="color: var(--accent-alt)">⬆️ Улучшение: ${Math.floor(building.cost * multiplier)}💰</span>` : ''}`;
+            } else {
+                tooltip.innerHTML = gameState.upgradeMode ? 'Кликни для улучшения' : 'Кликни для строительства';
+            }
+            tooltip.style.left = e.pageX + 15 + 'px';
+            tooltip.style.top = e.pageY + 15 + 'px';
+            tooltip.classList.add('show');
+        }
+
+        function hideTooltip() { document.getElementById('tooltip').classList.remove('show'); }
+
+        function handleCellClick(index) {
+            if (gameState.upgradeMode) {
+                upgradeBuilding(index);
+            } else {
+                placeBuilding(index);
+            }
+        }
+
+        function placeBuilding(index) {
+            if (!gameState.selectedBuilding) { showMessage('Выбери здание!'); return; }
+            const cell = cells[index];
+            if (cell.dataset.building) { showMessage('Уже занято!'); return; }
+            const building = BUILDINGS[gameState.selectedBuilding];
+            if (gameState.money < building.cost) { showMessage('Нужно больше денег!'); return; }
+            
+            gameState.money -= building.cost;
+            gameState.population += building.pop;
+            gameState.energy += building.energy;
+            gameState.eco += building.eco;
+            gameState.buildings.push({ index, type: gameState.selectedBuilding, level: 1 });
+            
+            cell.dataset.building = gameState.selectedBuilding;
+            cell.dataset.level = 1;
+            cell.classList.remove('grass', 'forest', 'water', 'mountain', 'beach');
+            cell.classList.add('occupied');
+            cell.innerHTML = building.icon + '<span class="building-level-badge">1</span>';
+            
+            showFloatingNumber('-' + building.cost, cell.offsetLeft + 20, cell.offsetTop, '#ff6b6b');
+            addXp(15);
+            checkQuests();
+            checkDailyChallenge();
+            checkAchievements();
+            updateUI();
+            checkGameState();
+        }
+
+        function upgradeBuilding(index) {
+            const cell = cells[index];
+            if (!cell.dataset.building) { showMessage('Нет здания!'); return; }
+            
+            const type = cell.dataset.building;
+            const building = BUILDINGS[type];
+            let level = parseInt(cell.dataset.level || 1);
+            
+            if (level >= 3) { showMessage('Макс. уровень!'); return; }
+            
+            const upgradeCost = Math.floor(building.cost * Math.pow(building.upgradeBonus, level));
+            if (gameState.money < upgradeCost) { showMessage('Нужно больше денег!'); return; }
+            
+            gameState.money -= upgradeCost;
+            level++;
+            cell.dataset.level = level;
+            
+            const newIncome = Math.floor(building.income * Math.pow(building.upgradeBonus, level - 1));
+            gameState.buildings.find(b => b.index === index).level = level;
+            
+            cell.innerHTML = building.icon + '<span class="building-level-badge">' + level + '</span>';
+            cell.classList.add('upgrade-glow');
+            setTimeout(() => cell.classList.remove('upgrade-glow'), 1000);
+            
+            showFloatingNumber('⬆️', cell.offsetLeft + 20, cell.offsetTop, '#FFB800');
+            addXp(25);
+            updateUI();
+        }
+
+        function selectBuilding(type) {
+            document.querySelectorAll('.building-btn[data-type]').forEach(btn => btn.classList.remove('selected'));
+            if (gameState.selectedBuilding === type) gameState.selectedBuilding = null;
+            else { gameState.selectedBuilding = type; event.target.closest('.building-btn').classList.add('selected'); }
+            gameState.upgradeMode = false;
+            document.getElementById('upgrade-btn').style.background = '';
+        }
+
+        document.querySelectorAll('.building-btn[data-type]').forEach(btn => {
+            btn.addEventListener('click', () => selectBuilding(btn.dataset.type));
         });
-        document.addEventListener('keyup', (e) => game.keys[e.key.toLowerCase()] = false);
+
+        document.getElementById('upgrade-btn').addEventListener('click', () => {
+            gameState.upgradeMode = !gameState.upgradeMode;
+            gameState.selectedBuilding = null;
+            document.querySelectorAll('.building-btn[data-type]').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('upgrade-btn').style.background = gameState.upgradeMode ? 'rgba(255,184,0,0.2)' : '';
+            showMessage(gameState.upgradeMode ? 'Кликни на здание для улучшения!' : 'Режим строительства');
+        });
+
+        function nextDay() {
+            gameState.day++;
+            let income = 0;
+            gameState.buildings.forEach(b => {
+                const building = BUILDINGS[b.type];
+                const level = b.level || 1;
+                income += Math.floor(building.income * Math.pow(building.upgradeBonus, level - 1));
+            });
+            income = Math.floor(income * (gameState.happiness / 100));
+            gameState.money += income;
+            
+            if (gameState.energy < 0) { gameState.happiness -= 10; gameState.money -= 20; addEvent('Энергетический кризис!', 'negative'); }
+            if (gameState.eco < 20) { gameState.happiness -= 5; addEvent('Экологическая проблема!', 'negative'); }
+            if (gameState.happiness > 80) gameState.population += Math.floor(Math.random() * 3);
+            
+            gameState.happiness = Math.max(0, Math.min(100, gameState.happiness));
+            gameState.energy = Math.max(0, Math.min(100, gameState.energy));
+            gameState.eco = Math.max(0, Math.min(100, gameState.eco));
+            
+            document.getElementById('time-icon').textContent = gameState.day % 2 === 1 ? '☀️' : '🌙';
+            document.getElementById('time-text').textContent = `День ${gameState.day}`;
+            
+            showMessage(`День ${gameState.day}: +${income}💰`);
+            showFloatingNumber('+' + income, window.innerWidth / 2, window.innerHeight / 2, '#00C48C');
+            addXp(10);
+            checkQuests();
+            checkRandomEvent();
+            updateUI();
+        }
+
+        function checkRandomEvent() {
+            EVENTS.forEach(event => {
+                if (event.condition(gameState) && Math.random() < 0.3) {
+                    setTimeout(() => showEvent(event), 500);
+                }
+            });
+        }
+
+        function showEvent(event) {
+            document.getElementById('event-icon').textContent = event.icon;
+            document.getElementById('event-title').textContent = event.name;
+            document.getElementById('event-text').textContent = event.message;
+            
+            if (event.effect.money) gameState.money += event.effect.money;
+            if (event.effect.happiness) gameState.happiness = Math.max(0, Math.min(100, gameState.happiness + event.effect.happiness));
+            if (event.effect.energy) gameState.energy = Math.max(0, Math.min(100, gameState.energy + event.effect.energy));
+            if (event.effect.eco) gameState.eco = Math.max(0, Math.min(100, gameState.eco + event.effect.eco));
+            if (event.effect.population) gameState.population += event.effect.population;
+            
+            addEvent(event.message, event.effect.money > 0 ? 'positive' : event.effect.money < 0 ? 'negative' : 'special');
+            document.getElementById('event-modal').classList.add('show');
+        }
+
+        function closeEvent() { document.getElementById('event-modal').classList.remove('show'); updateUI(); }
+
+        function addXp(amount) {
+            gameState.xp += amount;
+            if (gameState.xp >= gameState.xpToNextLevel) {
+                gameState.xp -= gameState.xpToNextLevel;
+                gameState.level++;
+                gameState.xpToNextLevel = Math.floor(gameState.xpToNextLevel * 1.5);
+                document.getElementById('new-level-text').textContent = `уровень ${gameState.level}`;
+                document.getElementById('levelup-modal').classList.add('show');
+            }
+            updateXpBar();
+        }
+
+        function updateXpBar() {
+            const percent = (gameState.xp / gameState.xpToNextLevel) * 100;
+            document.getElementById('xp-bar').style.width = percent + '%';
+            document.getElementById('player-level').textContent = gameState.level;
+        }
+
+        function checkQuests() {
+            const houses = gameState.buildings.filter(b => b.type === 'house').length;
+            const energySources = gameState.buildings.filter(b => ['solar', 'wind'].includes(b.type)).length;
+            
+            if (!gameState.quests[1].completed && houses >= 3) { gameState.quests[1].completed = true; addXp(50); document.getElementById('quest-1').classList.add('completed'); showMessage('Квест выполнен! +50 XP'); }
+            if (!gameState.quests[2].completed && energySources >= 2) { gameState.quests[2].completed = true; addXp(40); document.getElementById('quest-2').classList.add('completed'); showMessage('Квест выполнен! +40 XP'); }
+            if (!gameState.quests[3].completed && gameState.eco >= 60) { gameState.quests[3].completed = true; addXp(60); document.getElementById('quest-3').classList.add('completed'); showMessage('Квест выполнен! +60 XP'); }
+            if (!gameState.quests[4].completed && gameState.population >= 20) { gameState.quests[4].completed = true; addXp(80); document.getElementById('quest-4').classList.add('completed'); showMessage('Квест выполнен! +80 XP'); }
+        }
+
+        function checkDailyChallenge() {
+            const houses = gameState.buildings.filter(b => b.type === 'house').length;
+            if (!gameState.dailyChallenge.completed && gameState.dailyChallenge.type === 'houses') {
+                gameState.dailyChallenge.progress = houses;
+                document.getElementById('daily-progress').textContent = `${houses}/${gameState.dailyChallenge.target}`;
+                if (houses >= gameState.dailyChallenge.target) {
+                    gameState.dailyChallenge.completed = true;
+                    addXp(100);
+                    addEvent('Ежедневный вызов выполнен! +100 XP', 'special');
+                }
+            }
+        }
+
+        function checkAchievements() {
+            if (!gameState.achievements[1] && gameState.buildings.some(b => b.type === 'house')) { gameState.achievements[1] = true; document.getElementById('ach-1').classList.remove('locked', 'unlocked'); document.getElementById('ach-1').classList.add('unlocked'); }
+            if (!gameState.achievements[2] && gameState.energy > 60) { gameState.achievements[2] = true; document.getElementById('ach-2').classList.remove('locked', 'unlocked'); document.getElementById('ach-2').classList.add('unlocked'); }
+            if (!gameState.achievements[3] && gameState.eco > 60) { gameState.achievements[3] = true; document.getElementById('ach-3').classList.remove('locked', 'unlocked'); document.getElementById('ach-3').classList.add('unlocked'); }
+            if (!gameState.achievements[4] && gameState.population >= 20) { gameState.achievements[4] = true; document.getElementById('ach-4').classList.remove('locked', 'unlocked'); document.getElementById('ach-4').classList.add('unlocked'); }
+            if (!gameState.achievements[5] && gameState.money >= 2000) { gameState.achievements[5] = true; document.getElementById('ach-5').classList.remove('locked', 'unlocked'); document.getElementById('ach-5').classList.add('unlocked'); }
+        }
+
+        function updateUI() {
+            document.getElementById('money').textContent = gameState.money;
+            document.getElementById('population').textContent = gameState.population;
+            document.getElementById('energy').textContent = gameState.energy;
+            document.getElementById('eco').textContent = gameState.eco;
+            
+            document.getElementById('info-pop').textContent = gameState.population;
+            let income = 0;
+            gameState.buildings.forEach(b => { const building = BUILDINGS[b.type]; income += Math.floor(building.income * Math.pow(building.upgradeBonus, (b.level || 1) - 1)); });
+            document.getElementById('info-income').textContent = `+${income}`;
+            document.getElementById('info-energy').textContent = gameState.energy;
+            document.getElementById('info-eco').textContent = gameState.eco;
+            document.getElementById('info-happy').textContent = gameState.happiness + '%';
+            
+            const energyEl = document.getElementById('info-energy');
+            energyEl.className = 'info-value ' + (gameState.energy < 20 ? 'negative' : 'positive');
+            const ecoEl = document.getElementById('info-eco');
+            ecoEl.className = 'info-value ' + (gameState.eco < 20 ? 'negative' : 'positive');
+        }
+
+        function showMessage(text) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        }
+
+        function showFloatingNumber(text, x, y, color) {
+            const div = document.createElement('div');
+            div.className = 'floating-number';
+            div.textContent = text;
+            div.style.left = x + 'px';
+            div.style.top = y + 'px';
+            div.style.color = color;
+            document.getElementById('game-area').appendChild(div);
+            setTimeout(() => div.remove(), 1000);
+        }
+
+        function addEvent(text, type = '') {
+            const events = document.getElementById('events');
+            const item = document.createElement('div');
+            item.className = 'event-item ' + type;
+            item.innerHTML = `<div class="event-time">День ${gameState.day}</div>${text}`;
+            events.insertBefore(item, events.firstChild);
+        }
 
         function startGame() {
-            document.getElementById('startScreen').classList.add('hidden');
-            game.started = true;
-            initNPCs();
-            showOracle('Хранитель! Город Глория в опасности. Найди представителей 4х отделов и выполни их задания. Потом возвращайся ко мне!');
-            gameLoop();
+            document.getElementById('start-modal').classList.remove('show');
+            saveGame();
         }
 
-        function showOracle(text) {
-            const dialog = document.getElementById('oracleDialog');
-            document.getElementById('oracleText').textContent = text;
-            dialog.classList.add('show');
-            setTimeout(() => dialog.classList.remove('show'), 4000);
+        function closeLevelUp() { document.getElementById('levelup-modal').classList.remove('show'); }
+
+        function checkGameState() {
+            if (gameState.money < 0) { gameOver('Банкрот!', 'Деньги закончились.'); }
+            else if (gameState.population >= 50 && gameState.happiness >= 70 && gameState.eco >= 50) { gameOver('Поздравляем!', `Мегаполис за ${gameState.day} дней!`); }
         }
 
-        function chooseDepartment(dept) {
-            game.department = dept;
-            document.getElementById('departmentSelect').classList.add('hidden');
-            showOracle('Отлично! Теперь найди представителей всех отделов и помоги им. Начни с того, который тебе ближе!');
-            updateMission();
+        function gameOver(title, text) {
+            document.getElementById('gameover-title').textContent = title;
+            document.getElementById('gameover-text').textContent = text;
+            document.getElementById('gameover-modal').classList.add('show');
         }
 
-        function updateMission() {
-            const missions = [
-                'Найди представителей 4x отделов',
-                'Выполни миссии отделов',
-                'Вернись к Оракулу'
-            ];
-            document.getElementById('missionText').textContent = missions[game.mission];
+        function saveGame() {
+            gameState.lastPlayed = Date.now();
+            localStorage.setItem('innocity_save', JSON.stringify(gameState));
+            showMessage('Игра сохранена!');
         }
 
-        function interact() {
-            const player = game.player;
-            
-            game.npcs.forEach(npc => {
-                const dist = Math.hypot(player.x - npc.x, player.y - npc.y);
-                if (dist < 60 && !npc.completed) {
-                    if (npc.type === 'oracle') {
-                        if (game.xp >= 200) {
-                            showVictory();
-                        } else {
-                            showOracle('Сначала выполни все миссии отделов! Тебе нужно ' + (200 - game.xp) + ' XP.');
-                        }
-                    } else if (game.department) {
-                        npc.completed = true;
-                        const xpGain = npcTypes[npc.type].xp;
-                        game.xp += xpGain;
-                        game.level = Math.floor(game.xp / 50) + 1;
-                        createParticles(npc.x, npc.y, '#FFD700');
-                        showOracle('Миссия выполнена! +' + xpGain + ' XP');
-                        updateDisplay();
-                        
-                        const allDone = game.npcs.filter(n => n.type !== 'oracle').every(n => n.completed);
-                        if (allDone) {
-                            game.mission = 2;
-                            updateMission();
-                        }
-                    } else {
-                        showOracle('Сначала выбери своё отделение!');
-                        document.getElementById('departmentSelect').classList.remove('hidden');
-                    }
-                }
-            });
-
-            game.collectibles = game.collectibles.filter(c => {
-                const dist = Math.hypot(player.x - c.x, player.y - c.y);
-                if (dist < 30) {
-                    game.xp += 10;
-                    createParticles(c.x, c.y, '#00C48C');
-                    updateDisplay();
-                    return false;
-                }
-                return true;
-            });
-        }
-
-        function showVictory() {
-            game.phase = 'victory';
-            const screen = document.getElementById('victoryScreen');
-            screen.classList.remove('hidden');
-            
-            const roles = {
-                engineer: { icon: '🛠️', text: 'Ты стал МАСТЕРОМ-СБОРЩИКОМ! Воплощаешь идеи в жизнь! Приходи летом в лагерь ИнноСити!' },
-                digital: { icon: '💻', text: 'Ты стал РАЗРАБОТЧИКОМ! Пишешь код для города! Приходи летом в лагерь ИнноСити!' },
-                eco: { icon: '🔬', text: 'Ты стал ЛАБОРАНТОМ! Проводишь важные опыты! Приходи летом в лагерь ИнноСити!' },
-                media: { icon: '📸', text: 'Ты стал РЕПОРТЁРОМ! Рассказываешь истории города! Приходи летом в лагерь ИнноСити!' }
-            };
-            
-            const role = roles[game.department] || roles.engineer;
-            document.getElementById('finalRole').textContent = role.icon;
-            document.getElementById('finalText').textContent = role.text;
+        function loadGame() {
+            const saved = localStorage.getItem('innocity_save');
+            if (saved) {
+                gameState = JSON.parse(saved);
+                document.getElementById('player-avatar').textContent = gameState.playerChar;
+                initGrid();
+                gameState.buildings.forEach(b => {
+                    const cell = cells[b.index];
+                    const building = BUILDINGS[b.type];
+                    cell.dataset.building = b.type;
+                    cell.dataset.level = b.level || 1;
+                    cell.classList.remove('grass', 'forest', 'water', 'mountain', 'beach');
+                    cell.classList.add('occupied');
+                    cell.innerHTML = building.icon + '<span class="building-level-badge">' + (b.level || 1) + '</span>';
+                });
+                updateUI();
+                updateXpBar();
+                document.getElementById('time-icon').textContent = gameState.day % 2 === 1 ? '☀️' : '🌙';
+                document.getElementById('time-text').textContent = `День ${gameState.day}`;
+                showMessage('Игра загружена!');
+            } else {
+                showMessage('Нет сохранённой игры!');
+            }
         }
 
         function restartGame() {
-            location.reload();
+            document.getElementById('gameover-modal').classList.remove('show');
+            gameState = {
+                money: 1000, population: 0, energy: 50, eco: 50, happiness: 50,
+                day: 1, buildings: [], selectedBuilding: null, playerChar: selectedCharacter,
+                level: 1, xp: 0, xpToNextLevel: 100,
+                quests: { 1: { completed: false, target: { type: 'house', count: 3 }, progress: 0 }, 
+                          2: { completed: false, target: { types: ['solar', 'wind'], count: 2 }, progress: 0 },
+                          3: { completed: false, target: { eco: 60 }, progress: 0 },
+                          4: { completed: false, target: { pop: 20 }, progress: 0 } },
+                achievements: { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false },
+                dailyChallenge: { type: 'houses', target: 3, progress: 0, completed: false },
+                upgradeMode: false,
+                lastPlayed: Date.now()
+            };
+            document.querySelectorAll('.quest-item').forEach(q => { q.classList.remove('completed'); q.classList.add('active'); });
+            document.querySelectorAll('.achievement').forEach(a => { a.classList.add('locked'); a.classList.remove('unlocked'); });
+            document.getElementById('daily-progress').textContent = '0/3';
+            initGrid();
+            updateUI();
+            updateXpBar();
+            document.getElementById('time-icon').textContent = '☀️';
+            document.getElementById('time-text').textContent = 'День 1';
+            document.getElementById('events').innerHTML = '<div class="event-item positive"><div class="event-time">Начало</div>Новая игра началась!</div>';
         }
 
-        function createParticles(x, y, color) {
-            for (let i = 0; i < 10; i++) {
-                game.particles.push({
-                    x, y,
-                    vx: (Math.random() - 0.5) * 5,
-                    vy: (Math.random() - 0.5) * 5,
-                    life: 30,
-                    color
-                });
-            }
-        }
+        document.getElementById('next-day-btn').addEventListener('click', nextDay);
+        document.getElementById('reset-btn').addEventListener('click', restartGame);
 
-        function updateDisplay() {
-            document.getElementById('hpDisplay').textContent = '❤️'.repeat(game.hp);
-            document.getElementById('xpDisplay').textContent = game.xp;
-            document.getElementById('levelDisplay').textContent = game.level;
-        }
-
-        function gameLoop() {
-            if (!game.started) return;
-            
-            update();
-            render();
-            requestAnimationFrame(gameLoop);
-        }
-
-        function update() {
-            if (game.phase === 'victory') return;
-
-            const player = game.player;
-            const speed = player.speed;
-
-            if (game.keys['w'] || game.keys['arrowup']) player.y -= speed;
-            if (game.keys['s'] || game.keys['arrowdown']) player.y += speed;
-            if (game.keys['a'] || game.keys['arrowleft']) player.x -= speed;
-            if (game.keys['d'] || game.keys['arrowright']) player.x += speed;
-
-            player.x = Math.max(player.size, Math.min(canvas.width - player.size, player.x));
-            player.y = Math.max(player.size, Math.min(canvas.height - player.size, player.y));
-
-            if (Math.random() < 0.02 && game.collectibles.length < 5) {
-                game.collectibles.push({
-                    x: 100 + Math.random() * 700,
-                    y: 100 + Math.random() * 400,
-                    type: 'xp'
-                });
-            }
-
-            game.particles = game.particles.filter(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.life--;
-                return p.life > 0;
-            });
-        }
-
-        function render() {
-            ctx.fillStyle = '#0B1A33';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.strokeStyle = 'rgba(0, 196, 140, 0.1)';
-            ctx.lineWidth = 1;
-            for (let x = 0; x < canvas.width; x += 50) {
-                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-            }
-            for (let y = 0; y < canvas.height; y += 50) {
-                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-            }
-
-            buildings.forEach(b => {
-                ctx.fillStyle = b.color;
-                ctx.fillRect(b.x, b.y, b.w, b.h);
-                ctx.strokeStyle = b.isOracle ? '#A855F7' : '#00C48C';
-                ctx.lineWidth = b.isOracle ? 3 : 2;
-                ctx.strokeRect(b.x, b.y, b.w, b.h);
-                
-                ctx.fillStyle = '#fff';
-                ctx.font = '12px Orbitron';
-                ctx.textAlign = 'center';
-                ctx.fillText(b.name, b.x + b.w/2, b.y - 10);
-            });
-
-            game.npcs.forEach(npc => {
-                ctx.font = '35px Arial';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                
-                if (npc.completed) {
-                    ctx.shadowColor = '#00C48C';
-                    ctx.shadowBlur = 20;
-                }
-                ctx.fillText(npcTypes[npc.type]?.emoji || '👁️', npc.x, npc.y);
-                ctx.shadowBlur = 0;
-            });
-
-            game.collectibles.forEach(c => {
-                ctx.font = '25px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('⭐', c.x, c.y);
-            });
-
-            ctx.fillStyle = '#00C48C';
-            ctx.beginPath();
-            ctx.arc(game.player.x, game.player.y, game.player.size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#fff';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            ctx.font = '20px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🧑', game.player.x, game.player.y);
-
-            game.particles.forEach(p => {
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = p.life / 30;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-        }
-
-        render();
+        initGrid();
+        document.getElementById('character-modal').classList.add('show');
+        
+        setInterval(saveGame, 60000);
     </script>
 </body>
 </html>
