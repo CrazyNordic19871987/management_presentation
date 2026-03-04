@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИнноСити — Тест знаний</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #0B1A33;
+            --accent: #00C48C;
+            --accent-alt: #FFB800;
+            --accent-purple: #A855F7;
+            --accent-teal: #2DD4BF;
+            --white: #ffffff;
+            --gray: #6B7280;
+            --dark: #060d1a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 196, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 184, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+
+        .game-container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .stat-icon { font-size: 18px; }
+        .stat-num {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .stat-num.xp { color: var(--accent-alt); }
+        .stat-num.level { color: var(--accent-purple); }
+
+        .xp-bar-container {
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .xp-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-alt), var(--accent));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .screen {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 35px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .screen:hover {
+            border-color: rgba(0, 196, 140, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 196, 140, 0.1);
+        }
+
+        .hidden { display: none !important; }
+
+        .hero-icon { font-size: 80px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
+
+        .screen h1 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .screen h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .screen p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 16px 35px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 196, 140, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        .progress-bar {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.correct { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        .progress-dot.incorrect { background: #ff6b6b; }
+        .progress-dot.current { background: var(--accent-alt); box-shadow: 0 0 10px var(--accent-alt); transform: scale(1.3); }
+
+        .question-number {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 1.35rem;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            color: var(--white);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            background: rgba(0, 196, 140, 0.1);
+            border-color: rgba(0, 196, 140, 0.4);
+            transform: translateX(5px);
+        }
+
+        .answer-btn:disabled { cursor: default; opacity: 0.6; }
+        .answer-btn.correct {
+            background: rgba(0, 196, 140, 0.3);
+            border-color: var(--accent);
+        }
+        .answer-btn.incorrect {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+        }
+
+        .answer-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: var(--accent-alt);
+        }
+
+        .timer-container {
+            margin-bottom: 20px;
+        }
+
+        .timer-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        .timer-fill.warning { background: linear-gradient(90deg, var(--accent-alt), #ff6b6b); }
+        .timer-fill.danger { background: #ff6b6b; }
+
+        .timer-text {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .result-hero {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .score-label {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .result-stat {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .result-stat .icon { font-size: 2rem; margin-bottom: 10px; }
+        .result-stat .value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .result-stat .label { font-size: 0.8rem; color: var(--gray); margin-top: 5px; }
+        .result-stat.correct .value { color: var(--accent); }
+        .result-stat.incorrect .value { color: #ff6b6b; }
+        .result-stat.time .value { color: var(--accent-alt); }
+
+        .answers-review {
+            text-align: left;
+            margin-top: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .review-item {
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+        }
+
+        .review-item.correct { border-color: var(--accent); }
+        .review-item.incorrect { border-color: #ff6b6b; }
+
+        .review-question { font-weight: 600; margin-bottom: 8px; }
+        .review-correct { color: var(--accent); font-size: 0.85rem; margin-top: 5px; }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .category-btn {
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .category-btn.selected {
+            background: rgba(0, 196, 140, 0.15);
+            border-color: var(--accent);
+        }
+
+        .category-icon { font-size: 40px; margin-bottom: 10px; }
+        .category-title { font-weight: 700; margin-bottom: 5px; }
+        .category-desc { font-size: 0.8rem; color: var(--gray); }
+
+        .difficulty-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .difficulty-btn:hover { transform: translateY(-2px); }
+        .difficulty-btn.selected {
+            border-color: var(--accent);
+            background: rgba(0, 196, 140, 0.15);
+        }
+
+        .difficulty-btn.easy.selected { border-color: var(--accent); color: var(--accent); }
+        .difficulty-btn.medium.selected { border-color: var(--accent-alt); color: var(--accent-alt); }
+        .difficulty-btn.hard.selected { border-color: var(--accent-purple); color: var(--accent-purple); }
+
+        .feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px 50px;
+            border-radius: 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            z-index: 100;
+            animation: popIn 0.3s ease;
+            pointer-events: none;
+        }
+
+        .feedback.correct {
+            background: rgba(0, 196, 140, 0.95);
+            color: var(--primary);
+        }
+
+        .feedback.incorrect {
+            background: rgba(255, 107, 107, 0.95);
+            color: var(--white);
+        }
+
+        @keyframes popIn {
+            from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .feedback.hide {
+            animation: popOut 0.3s ease forwards;
+        }
+
+        @keyframes popOut {
+            from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            to { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+        }
+
+        .points-earned {
+            position: fixed;
+            font-size: 2rem;
+            font-weight: 900;
+            font-family: 'Montserrat', sans-serif;
+            pointer-events: none;
+            z-index: 101;
+            animation: floatUp 1s ease-out forwards;
+            color: var(--accent);
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-60px); }
+        }
+
+        @media (max-width: 600px) {
+            .game-header { flex-direction: column; }
+            .stats-row { justify-content: center; }
+            .screen { padding: 25px 18px; }
+            .question { font-size: 1.1rem; }
+            .category-grid { grid-template-columns: 1fr; }
+            .results-stats { grid-template-columns: 1fr; }
+        }
+
+        .streak-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(255, 184, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 184, 0, 0.3);
+        }
+
+        .streak-fire { font-size: 20px; }
+        .streak-count {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--accent-alt);
+        }
+
+        .streak-container.hot {
+            animation: glow 0.5s ease infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(255, 184, 0, 0.3); }
+            to { box-shadow: 0 0 15px rgba(255, 184, 0, 0.6); }
+        }
+
+        .badges-earned {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            padding: 8px 15px;
+            background: rgba(255, 184, 0, 0.15);
+            border: 1px solid var(--accent-alt);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            animation: badgePop 0.5s ease;
+        }
+
+        @keyframes badgePop {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="logo">
+                <div class="logo-icon">🏙️</div>
+                <span>ИнноСити</span>
+            </div>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span class="stat-icon">⭐</span>
+                    <span class="stat-num level" id="level">1</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-icon">💎</span>
+                    <span class="stat-num xp" id="xp">0</span>
+                    <div class="xp-bar-container"><div class="xp-bar" id="xp-bar"></div></div>
+                </div>
+                <div class="streak-container" id="streak-box">
+                    <span class="streak-fire">🔥</span>
+                    <span class="streak-count" id="streak">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="start-screen">
+            <div class="hero-icon">🎯</div>
+            <h1>Тест знаний <span>ИнноСити</span></h1>
+            <p>Проверь свои знания о лагере, бизнесе и команде!</p>
+            
+            <div style="text-align: left; margin-bottom: 25px;">
+                <p style="font-size: 0.9rem; color: var(--accent); margin-bottom: 10px;">Выбери категорию:</p>
+                <div class="category-grid">
+                    <div class="category-btn selected" data-category="camp">
+                        <div class="category-icon">🏕️</div>
+                        <div class="category-title">О лагере</div>
+                        <div class="category-desc">Смены, друзья, приключения</div>
+                    </div>
+                    <div class="category-btn" data-category="business">
+                        <div class="category-icon">💼</div>
+                        <div class="category-title">Бизнес</div>
+                        <div class="category-desc">Деньги, команды, идеи</div>
+                    </div>
+                    <div class="category-btn" data-category="esg">
+                        <div class="category-icon">🌱</div>
+                        <div class="category-title">Эко & Природа</div>
+                        <div class="category-desc">Экология, устойчивость</div>
+                    </div>
+                    <div class="category-btn" data-category="teamwork">
+                        <div class="category-icon">🤝</div>
+                        <div class="category-title">Команда</div>
+                        <div class="category-desc">Лидерство, проекты</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: left; margin-bottom: 25px;">
+                <p style="font-size: 0.9rem; color: var(--accent); margin-bottom: 10px;">Выбери сложность:</p>
+                <div class="difficulty-btns">
+                    <button class="difficulty-btn easy selected" data-difficulty="easy">🌱 Легко</button>
+                    <button class="difficulty-btn medium" data-difficulty="medium">⚡ Средне</button>
+                    <button class="difficulty-btn hard" data-difficulty="hard">🔥 Сложно</button>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="startGame()">Начать игру</button>
+        </div>
+
+        <div class="screen hidden" id="game-screen">
+            <div class="progress-bar" id="progress-bar"></div>
+            
+            <div class="timer-container">
+                <div class="timer-bar">
+                    <div class="timer-fill" id="timer-fill"></div>
+                </div>
+                <div class="timer-text">Осталось времени: <span id="timer-text">30</span> сек</div>
+            </div>
+            
+            <div class="question-number" id="question-number">Вопрос 1</div>
+            <div class="question" id="question">Вопрос будет здесь</div>
+            <div class="answers" id="answers"></div>
+        </div>
+
+        <div class="screen hidden" id="result-screen">
+            <div class="result-hero" id="result-hero">🏆</div>
+            <h1>Результат</h1>
+            
+            <div class="score-display" id="score-display">0/10</div>
+            <div class="score-label">правильных ответов</div>
+            
+            <div class="results-stats">
+                <div class="result-stat correct">
+                    <div class="icon">✓</div>
+                    <div class="value" id="correct-count">0</div>
+                    <div class="label">Правильно</div>
+                </div>
+                <div class="result-stat incorrect">
+                    <div class="icon">✗</div>
+                    <div class="value" id="incorrect-count">0</div>
+                    <div class="label">Неправильно</div>
+                </div>
+                <div class="result-stat time">
+                    <div class="icon">⏱️</div>
+                    <div class="value" id="avg-time">0с</div>
+                    <div class="label">Среднее время</div>
+                </div>
+            </div>
+
+            <div class="badges-earned" id="badges-earned"></div>
+            
+            <div class="answers-review" id="answers-review"></div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="restartGame()">Играть снова</button>
+                <button class="btn btn-primary" onclick="backToMenu()">В меню</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const QUESTION_BANK = {
+            camp: [
+                { question: "Сколько дней длится одна смена в лагере?", answers: [{ text: "7 дней" }, { text: "14 дней" }, { text: "30 дней" }, { text: "3 дня" }], correct: 1 },
+                { question: "Что такое департамент в лагере?", answers: [{ text: "Комната отдыха" }, { text: "Группа по интересам" }, { text: "Спортивный зал" }, { text: "Столовая" }], correct: 1 },
+                { question: "Сколько человек обычно в одном отряде?", answers: [{ text: "2 человека" }, { text: "50 человек" }, { text: "Около 10 человек" }, { text: "100 человек" }], correct: 2 },
+                { question: "Что такое ролевая игра в лагере?", answers: [{ text: "Спорт" }, { text: "Когда ты пробуешь разные роли" }, { text: "Только рисование" }, { text: "Сон" }], correct: 1 },
+                { question: "Зачем нужны проекты в лагере?", answers: [{ text: "Чтобы скучать" }, { text: "Чтобы учиться и создавать" }, { text: "Чтобы спать" }, { text: "Чтобы ничего не делать" }], correct: 1 },
+                { question: "Что такое защита проекта?", answers: [{ text: "Спрятаться" }, { text: "Показать результат работы" }, { text: "Поспать" }, { text: "Уйти домой" }], correct: 1 },
+                { question: "Кто такой Шерпа в команде?", answers: [{ text: "Водитель" }, { text: "Тот, кто ведёт переговоры" }, { text: "Повар" }, { text: "Охранник" }], correct: 1 },
+                { question: "Что делает Спикер?", answers: [{ text: "Молчит" }, { text: "Выступает перед командой" }, { text: "Спит" }, { text: "Рисует" }], correct: 1 },
+                { question: "Какой язык изучают в лагере?", answers: [{ text: "Китайский" }, { text: "Английский" }, { text: "Испанский" }, { text: "Немецкий" }], correct: 1 },
+                { question: "Что такое командная экономика?", answers: [{ text: "Каждый сам за себя" }, { text: "Деньги и ресурсы делятся в команде" }, { text: "Ничего" }, { text: "Только для взрослых" }], correct: 1 }
+            ],
+            business: [
+                { question: "Что такое предприниматель?", answers: [{ text: "Тот, кто ничего не делает" }, { text: "Тот, кто создаёт бизнес и идеи" }, { text: "Тот, кто только смотрит" }, { text: "Тот, кто ложится спать" }], correct: 1 },
+                { question: "Что такое идея для проекта?", answers: [{ text: "Случайное слово" }, { text: "План действий для решения проблемы" }, { text: "Просто мечта" }, { text: "Ничего" }], correct: 1 },
+                { question: "Зачем нужен бюджет проекта?", answers: [{ text: "Чтобы потратить всё" }, { text: "Чтобы знать, сколько денег нужно и как их использовать" }, { text: "Чтобы забыть" }, { text: "Чтобы спрятать" }], correct: 1 },
+                { question: "Что такое переговоры?", answers: [{ text: "Ссора" }, { text: "Договориться о чём-то с другими" }, { text: "Молчание" }, { text: "Сон" }], correct: 1 },
+                { question: "Что такое команда?", answers: [{ text: "Один человек" }, { text: "Группа людей, которые работают вместе" }, { text: "Никто" }, { text: "Только взрослые" }], correct: 1 },
+                { question: "Зачем нужны роли в команде?", answers: [{ text: "Чтобы никто ничего не делал" }, { text: "Чтобы каждый знал, что делать" }, { text: "Для красоты" }, { text: "Чтобы скучать" }], correct: 1 },
+                { question: "Что такое доход?", answers: [{ text: "Деньги, которые тратишь" }, { text: "Деньги, которые получаешь" }, { text: "Долг" }, { text: "Потеря" }], correct: 1 },
+                { question: "Что такое расход?", answers: [{ text: "Деньги, которые получаешь" }, { text: "Деньги, которые тратишь" }, { text: "Подарок" }, { text: "Накопление" }], correct: 1 },
+                { question: "Что такое прибыль?", answers: [{ text: "Доход минус расход" }, { text: "Просто расходы" }, { text: "Ничего" }, { text: "Долг" }], correct: 0 },
+                { question: "Зачем нужен план?", answers: [{ text: "Чтобы забыть" }, { text: "Чтобы знать следующие шаги" }, { text: "Для украшения" }, { text: "Чтобы скучать" }], correct: 1 }
+            ],
+            esg: [
+                { question: "Что такое экология?", answers: [{ text: "Отношения между людьми" }, { text: "Природа и как её беречь" }, { text: "Только экономика" }, { text: "Спорт" }], correct: 1 },
+                { question: "Что такое сортировка отходов?", answers: [{ text: "Выбросить всё в кучу" }, { text: "Разделять мусор по типам" }, { text: "Сжечь" }, { text: "Закопать" }], correct: 1 },
+                { question: "Зачем экономить воду?", answers: [{ text: "Не зачем" }, { text: "Вода — ценный ресурс" }, { text: "Чтобы потратить" }, { text: "Всегда много воды" }], correct: 1 },
+                { question: "Что такое возобновляемая энергия?", answers: [{ text: "Уголь и нефть" }, { text: "Солнце и ветер" }, { text: "Атомная" }, { text: "Ничего" }], correct: 1 },
+                { question: "Как помочь природе каждый день?", answers: [{ text: "Мусорить" }, { text: "Выключать свет, беречь воду" }, { text: "Тратить всё" }, { text: "Ничего не делать" }], correct: 1 },
+                { question: "Что такое переработка?", answers: [{ text: "Выбросить" }, { text: "Сделать из старого новое" }, { text: "Забыть" }, { text: "Сжечь" }], correct: 1 },
+                { question: "Зачем сажать деревья?", answers: [{ text: "Не зачем" }, { text: "Для чистого воздуха" }, { text: "Чтобы срубить" }, { text: "Для красоты" }], correct: 1 },
+                { question: "Что такое раздельный сбор?", answers: [{ text: "Всё в одну кучу" }, { text: "Стекло, пластик, бумага — отдельно" }, { text: "Не сортировать" }, { text: "Выбросить" }], correct: 1 },
+                { question: "Как экономить энергию?", answers: [{ text: "Включить всё" }, { text: "Выключать свет и технику" }, { text: "Не думать" }, { text: "Тратить больше" }], correct: 1 },
+                { question: "Что такое устойчивое развитие?", answers: [{ text: "Тратить всё сразу" }, { text: "Развиваться, не навредив природе" }, { text: "Ничего" }, { text: "Только экономика" }], correct: 1 }
+            ],
+            teamwork: [
+                { question: "Что такое лидер?", answers: [{ text: "Тот, кто всё делает сам" }, { text: "Тот, кто ведёт команду к цели" }, { text: "Тот, кто ничего не делает" }, { text: "Тот, кто мешает" }], correct: 1 },
+                { question: "Зачем нужна командная работа?", answers: [{ text: "Чтобы всё сделать одному" }, { text: "Сила в команде — больше успеешь" }, { text: "Чтобы ссориться" }, { text: "Чтобы никто не работал" }], correct: 1 },
+                { question: "Что такое цель проекта?", answers: [{ text: "Просто так" }, { text: "То, чего хочешь достичь" }, { text: "Ничего" }, { text: "Забыть" }], correct: 1 },
+                { question: "Как решать конфликты в команде?", answers: [{ text: "Ругаться" }, { text: "Слушать и договариваться" }, { text: "Ничего" }, { text: "Разойтись" }], correct: 1 },
+                { question: "Что такое критическое мышление?", answers: [{ text: "Думать плохо о других" }, { text: "Анализировать и задавать вопросы" }, { text: "Не думать" }, { text: "Соглашаться со всем" }], correct: 1 },
+                { question: "Зачем нужна обратная связь?", answers: [{ text: "Чтобы обидеть" }, { text: "Чтобы улучшаться" }, { text: "Чтобы ругать" }, { text: "Чтобы молчать" }], correct: 1 },
+                { question: "Что такое тайм-менеджмент?", answers: [{ text: "Тратить время впустую" }, { text: "Планировать своё время" }, { text: "Опаздывать всегда" }, { text: "Спать везде" }], correct: 1 },
+                { question: "Как ставить цели?", answers: [{ text: "Не ставить" }, { text: "Чётко и измеримо" }, { text: "Мечтать" }, { text: "Забыть" }], correct: 1 },
+                { question: "Что такое коммуникация?", answers: [{ text: "Молчание" }, { text: "Общение и обмен идеями" }, { text: "Крики" }, { text: "Ничего" }], correct: 1 },
+                { question: "Как быть хорошим командным игроком?", answers: [{ text: "Делать только своё" }, { text: "Слушать, помогать, поддерживать" }, { text: "Мешать другим" }, { text: "Ничего" }], correct: 1 }
+            ]
+        };
+
+        let gameState = {
+            category: 'camp',
+            difficulty: 'easy',
+            questions: [],
+            currentIndex: 0,
+            correct: 0,
+            incorrect: 0,
+            xp: 0,
+            level: 1,
+            xpToNextLevel: 100,
+            streak: 0,
+            maxStreak: 0,
+            startTime: 0,
+            questionTimes: [],
+            answers: [],
+            userAnswers: [],
+            timer: null,
+            timeLeft: 30,
+            timePerQuestion: 30
+        };
+
+        const DIFFICULTY = {
+            easy: { time: 30, xpCorrect: 10, xpIncorrect: 2, questionCount: 10 },
+            medium: { time: 20, xpCorrect: 20, xpIncorrect: 5, questionCount: 10 },
+            hard: { time: 15, xpCorrect: 30, xpIncorrect: 8, questionCount: 10 }
+        };
+
+        const BADGES = [
+            { name: "Новичок", icon: "🌱", condition: (g) => g.correct >= 1 },
+            { name: "Знаток", icon: "📚", condition: (g) => g.correct >= 5 },
+            { name: "Эксперт", icon: "🏆", condition: (g) => g.correct >= 8 },
+            { name: "Мастер", icon: "👑", condition: (g) => g.correct >= 10 },
+            { name: "Огонь!", icon: "🔥", condition: (g) => g.maxStreak >= 3 },
+            { name: "Перфекционист", icon: "💎", condition: (g) => g.correct === 10 && g.difficulty === 'hard' },
+            { name: "Легенда", icon: "⭐", condition: (g) => g.xp >= 500 }
+        ];
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                gameState.category = btn.dataset.category;
+            });
+        });
+
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                gameState.difficulty = btn.dataset.difficulty;
+            });
+        });
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function getQuestions() {
+            let questions = [];
+            const cat = gameState.category;
+            
+            questions = [...QUESTION_BANK[cat]];
+            
+            return shuffleArray(questions).slice(0, DIFFICULTY[gameState.difficulty].questionCount);
+        }
+
+        function startGame() {
+            gameState.questions = getQuestions();
+            gameState.currentIndex = 0;
+            gameState.correct = 0;
+            gameState.incorrect = 0;
+            gameState.streak = 0;
+            gameState.maxStreak = 0;
+            gameState.questionTimes = [];
+            gameState.answers = [];
+            gameState.userAnswers = [];
+            gameState.timePerQuestion = DIFFICULTY[gameState.difficulty].time;
+            
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = gameState.questions[gameState.currentIndex];
+            const diff = DIFFICULTY[gameState.difficulty];
+            
+            gameState.timeLeft = diff.time;
+            gameState.startTime = Date.now();
+            
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.innerHTML = '';
+            for (let i = 0; i < gameState.questions.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                if (i < gameState.currentIndex) {
+                    dot.classList.add(gameState.answers[i] ? 'correct' : 'incorrect');
+                } else if (i === gameState.currentIndex) {
+                    dot.classList.add('current');
+                }
+                progressBar.appendChild(dot);
+            }
+            
+            document.getElementById('question-number').textContent = `Вопрос ${gameState.currentIndex + 1}/${gameState.questions.length}`;
+            document.getElementById('question').textContent = q.question;
+            
+            const answersDiv = document.getElementById('answers');
+            answersDiv.innerHTML = '';
+            
+            q.answers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.innerHTML = `<span class="answer-icon">${String.fromCharCode(65 + index)}</span>${answer.text}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                answersDiv.appendChild(btn);
+            });
+            
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(gameState.timer);
+            updateTimerDisplay();
+            
+            gameState.timer = setInterval(() => {
+                gameState.timeLeft--;
+                updateTimerDisplay();
+                
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timer);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerFill = document.getElementById('timer-fill');
+            const timerText = document.getElementById('timer-text');
+            const maxTime = DIFFICULTY[gameState.difficulty].time;
+            
+            const percent = (gameState.timeLeft / maxTime) * 100;
+            timerFill.style.width = percent + '%';
+            timerText.textContent = gameState.timeLeft;
+            
+            timerFill.classList.remove('warning', 'danger');
+            if (gameState.timeLeft <= 5) {
+                timerFill.classList.add('danger');
+            } else if (gameState.timeLeft <= 10) {
+                timerFill.classList.add('warning');
+            }
+        }
+
+        function handleTimeout() {
+            gameState.incorrect++;
+            gameState.streak = 0;
+            gameState.answers.push(false);
+            gameState.userAnswers.push(-1);
+            
+            const timeTaken = DIFFICULTY[gameState.difficulty].time;
+            gameState.questionTimes.push(timeTaken);
+            
+            showFeedback(false);
+            highlightAnswer(gameState.questions[gameState.currentIndex].correct);
+            
+            setTimeout(() => {
+                nextQuestion();
+            }, 1500);
+        }
+
+        function selectAnswer(index) {
+            clearInterval(gameState.timer);
+            
+            const q = gameState.questions[gameState.currentIndex];
+            const isCorrect = index === q.correct;
+            const timeTaken = (Date.now() - gameState.startTime) / 1000;
+            
+            gameState.questionTimes.push(timeTaken);
+            gameState.answers.push(isCorrect);
+            gameState.userAnswers.push(index);
+            
+            if (isCorrect) {
+                gameState.correct++;
+                gameState.streak++;
+                if (gameState.streak > gameState.maxStreak) {
+                    gameState.maxStreak = gameState.streak;
+                }
+                
+                const timeBonus = Math.floor(gameState.timeLeft / 3);
+                const xpEarned = DIFFICULTY[gameState.difficulty].xpCorrect + timeBonus;
+                gameState.xp += xpEarned;
+                
+                showFeedback(true);
+                showPointsAnimation();
+            } else {
+                gameState.incorrect++;
+                gameState.streak = 0;
+                gameState.xp += DIFFICULTY[gameState.difficulty].xpIncorrect;
+                showFeedback(false);
+            }
+            
+            document.querySelectorAll('.answer-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+            
+            highlightAnswer(q.correct, isCorrect ? -1 : index);
+            
+            checkLevelUp();
+            updateStats();
+            
+            setTimeout(() => {
+                nextQuestion();
+            }, 1500);
+        }
+
+        function highlightAnswer(correctIndex, wrongIndex = -1) {
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons[correctIndex].classList.add('correct');
+            if (wrongIndex >= 0 && wrongIndex !== correctIndex) {
+                buttons[wrongIndex].classList.add('incorrect');
+            }
+        }
+
+        function showFeedback(correct) {
+            const feedback = document.createElement('div');
+            feedback.className = `feedback ${correct ? 'correct' : 'incorrect'}`;
+            feedback.textContent = correct ? '✓ Верно!' : '✗ Неверно';
+            document.body.appendChild(feedback);
+            
+            setTimeout(() => {
+                feedback.classList.add('hide');
+                setTimeout(() => feedback.remove(), 300);
+            }, 1000);
+        }
+
+        function showPointsAnimation() {
+            const points = document.createElement('div');
+            points.className = 'points-earned';
+            points.textContent = '+' + DIFFICULTY[gameState.difficulty].xpCorrect;
+            points.style.left = (window.innerWidth / 2 - 30) + 'px';
+            points.style.top = (window.innerHeight / 2 - 20) + 'px';
+            document.body.appendChild(points);
+            
+            setTimeout(() => points.remove(), 1000);
+        }
+
+        function checkLevelUp() {
+            if (gameState.xp >= gameState.xpToNextLevel) {
+                gameState.xp -= gameState.xpToNextLevel;
+                gameState.level++;
+                gameState.xpToNextLevel = Math.floor(gameState.xpToNextLevel * 1.5);
+                
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback correct';
+                feedback.textContent = '⬆️ Уровень ' + gameState.level + '!';
+                document.body.appendChild(feedback);
+                
+                setTimeout(() => {
+                    feedback.classList.add('hide');
+                    setTimeout(() => feedback.remove(), 1500);
+                }, 1500);
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('xp').textContent = gameState.xp;
+            document.getElementById('level').textContent = gameState.level;
+            document.getElementById('streak').textContent = gameState.streak;
+            
+            const xpPercent = (gameState.xp / gameState.xpToNextLevel) * 100;
+            document.getElementById('xp-bar').style.width = xpPercent + '%';
+            
+            const streakBox = document.getElementById('streak-box');
+            if (gameState.streak >= 3) {
+                streakBox.classList.add('hot');
+            } else {
+                streakBox.classList.remove('hot');
+            }
+        }
+
+        function nextQuestion() {
+            gameState.currentIndex++;
+            
+            if (gameState.currentIndex >= gameState.questions.length) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            clearInterval(gameState.timer);
+            
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            
+            const total = gameState.questions.length;
+            const correct = gameState.correct;
+            
+            document.getElementById('score-display').textContent = `${correct}/${total}`;
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('incorrect-count').textContent = gameState.incorrect;
+            
+            const avgTime = gameState.questionTimes.reduce((a, b) => a + b, 0) / total;
+            document.getElementById('avg-time').textContent = avgTime.toFixed(1) + 'с';
+            
+            let hero = '😢';
+            if (correct === total) hero = '🏆';
+            else if (correct >= total * 0.8) hero = '🎉';
+            else if (correct >= total * 0.5) hero = '👍';
+            else if (correct >= total * 0.3) hero = '🤔';
+            
+            document.getElementById('result-hero').textContent = hero;
+            
+            const badgesDiv = document.getElementById('badges-earned');
+            badgesDiv.innerHTML = '';
+            
+            BADGES.forEach(badge => {
+                if (badge.condition(gameState)) {
+                    const badgeEl = document.createElement('div');
+                    badgeEl.className = 'badge-earned';
+                    badgeEl.textContent = badge.icon + ' ' + badge.name;
+                    badgesDiv.appendChild(badgeEl);
+                }
+            });
+            
+            const reviewDiv = document.getElementById('answers-review');
+            reviewDiv.innerHTML = '';
+            
+            gameState.questions.forEach((q, i) => {
+                const isCorrect = gameState.answers[i];
+                const userAnswerIndex = gameState.userAnswers[i];
+                const item = document.createElement('div');
+                item.className = `review-item ${isCorrect ? 'correct' : 'incorrect'}`;
+                
+                let html = `<div class="review-question">${i + 1}. ${q.question}</div>`;
+                if (!isCorrect && userAnswerIndex >= 0) {
+                    html += `<div class="review-correct">Ваш ответ: ${q.answers[userAnswerIndex].text}</div>`;
+                }
+                html += `<div class="review-correct">Правильный ответ: ${q.answers[q.correct].text}</div>`;
+                
+                item.innerHTML = html;
+                reviewDiv.appendChild(item);
+            });
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        function backToMenu() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+
+        updateStats();
+    </script>
+</body>
+</html>
