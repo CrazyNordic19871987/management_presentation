@@ -2018,7 +2018,8 @@
     <section class="slide slide-dark content-slide" id="slide-18">
         <h2>🎮 Попробуй прямо сейчас!</h2>
         <p class="slide-desc">Интерактивные форматы для детей и родителей</p>
-        <div class="grid-2" style="margin-top: 40px;">
+        
+        <div class="grid-3" style="margin-top: 40px;">
             <div class="card" style="text-align: center; cursor: pointer;" onclick="window.open('gloria-game.html', '_blank')">
                 <div style="font-size: 60px; margin-bottom: 20px;">🎮</div>
                 <h3>ИнноСити: Хранитель города</h3>
@@ -2031,12 +2032,23 @@
                 <div style="margin-top: 25px; padding: 12px 30px; background: var(--gradient-1); border-radius: 25px; font-weight: 700; display: inline-block;">ИГРАТЬ →</div>
             </div>
             <div class="card" style="text-align: center; cursor: pointer;" onclick="window.open('gloria-quiz.html', '_blank')">
-                <div style="font-size: 60px; margin-bottom: 20px;">🔮</div>
+                <div style="font-size: 60px; margin-bottom: 20px;">🎯</div>
                 <h3>Тест: Департамент</h3>
                 <p style="margin-top: 15px;">Ответь на 10 вопросов и узнай, какой из 4 департаментов подходит именно тебе! Идеально для выбора направления.</p>
                 <div class="tags" style="justify-content: center; margin-top: 20px;">
                     <span class="tag">10 вопросов</span>
                     <span class="tag">4 департамента</span>
+                    <span class="tag">Для детей 7-13</span>
+                </div>
+                <div style="margin-top: 25px; padding: 12px 30px; background: var(--gradient-2); border-radius: 25px; font-weight: 700; display: inline-block;">ПРОЙТИ →</div>
+            </div>
+            <div class="card" style="text-align: center; cursor: pointer;" onclick="window.open('ИнноСити_Тест_знаний.html', '_blank')">
+                <div style="font-size: 60px; margin-bottom: 20px;">📚</div>
+                <h3>Тест знаний</h3>
+                <p style="margin-top: 15px;">Проверь свои знания о лагере, бизнесе, экологии и команде! 4 категории, 40 вопросов.</p>
+                <div class="tags" style="justify-content: center; margin-top: 20px;">
+                    <span class="tag">40 вопросов</span>
+                    <span class="tag">4 категории</span>
                     <span class="tag">Для детей 7-13</span>
                 </div>
                 <div style="margin-top: 25px; padding: 12px 30px; background: var(--gradient-1); border-radius: 25px; font-weight: 700; display: inline-block;">НАЧАТЬ →</div>
@@ -2202,7 +2214,7 @@
                 document.querySelector('.timer-display').innerHTML = '<div class="timer-block" style="width:100%;"><span style="font-size:1.5rem;background:none;-webkit-text-fill-color:#00C48C;">Лагерь уже идёт!</span></div>';
             }
         }
-        
+
         updateTimer();
         setInterval(updateTimer, 1000);
     </script>
